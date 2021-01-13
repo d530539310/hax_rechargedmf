@@ -9,6 +9,7 @@ define('CURSCRIPT', 'api');
 define('DISABLEXSSCHECK', true);
 
 require_once '../../../../source/class/class_core.php';
+require_once '../../../../source/plugin/hax_rechargedmf/alipay/vip_function.func.php';
 $discuz = C::app();
 $discuz->init();
 
@@ -35,21 +36,22 @@ if($result){
 	//支付完成时间：$result['time_end']  格式为yyyyMMddHHmmss
 	//具体详细请看微信文档：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_7&index=8
 	if($result['result_code']=='SUCCESS'){
-	    $orderdata= C::t('#hax_rechargedmf#hax_rechargedmf_orderlog')->fetch($result['out_trade_no']);
+	    $orderdata= C::t('#hax_rechargedmf#hax_rechargedmf_grporder')->fetch($result['out_trade_no']);
         if($orderdata['state']==0){
-            $orderarr=array(
+            $ret = buygroup($orderdata['groupid'], $orderdata['grouptime'],$orderdata['uid']);
+            if($orderdata['credit']!="0"){
+                $orderdata['credit'] = explode("|",$orderdata['credit']);
+    		    updatemembercount($orderdata['uid'], array('extcredits'.$orderdata['credit'][0]=>$orderdata['credit'][1]), true, '', 0, '',lang('plugin/hax_rechargedmf', 'slang23'),lang('plugin/hax_rechargedmf', 'slang35'));
+    		}
+            
+    		$orderarr=array(
     			'state'=>'1',
     			'zftime'=>$_G['timestamp'],
-    			'sn'=>$result['transaction_id'],
-    			'payid'=>$result['openid'],
+    			'totime'=>$ret['times'],
+    // 			'sn'=>$result['alipay_trade_query_response']['trade_no'],
+    //     		'payid'=>$result['alipay_trade_query_response']['buyer_logon_id'],
     		);
-    		C::t('#hax_rechargedmf#hax_rechargedmf_orderlog')->update($orderdata, $orderarr);
-    		
-    		updatemembercount($orderdata['uid'], array('extcredits'.$orderdata['credittype']=>$orderdata['credit']), true, '', 0, '',lang('plugin/hax_rechargedmf', 'slang21'),lang('plugin/hax_rechargedmf', 'slang22'));
-    		if($orderdata['credit2']!="0"){
-    		    $orderdata['credit2'] = explode("|",$orderdata['credit2']);
-    		    updatemembercount($orderdata['uid'], array('extcredits'.$orderdata['credit2'][0]=>$orderdata['credit2'][1]), true, '', 0, '',lang('plugin/hax_rechargedmf', 'slang23'),lang('plugin/hax_rechargedmf', 'slang24'));
-    		}
+    		C::t('#hax_rechargedmf#hax_rechargedmf_grporder')->update($orderdata, $orderarr);
         }
 	}
 }else{
