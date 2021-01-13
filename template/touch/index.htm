@@ -1,1 +1,1016 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>$hax_rechargedmf['paytitle']</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<link rel="stylesheet" type="text/css" href="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/czstyle_m.css?v=1.3">
+<link rel="stylesheet" href="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/flower.css" type="text/css">
+<!--{if $hax_rechargedmf['css_mbcolor']}-->
+<style>
+.headimgbox p,.pay-plugin-tab-wrapper .grp_active a,.pay-plugin-price-num,.grp_switch .qh{color:{$hax_rechargedmf['css_mbcolor']};}
+.hax_headnav,.trade-list-wrapper .is-selected .moneybox,.zf_btn a,.pay-plugin-price-icon,.grp_switch .xf,.pay-plugin-price-bgcolor{background:{$hax_rechargedmf['css_mbcolor']};}
+.pay-plugin-price-list-outside .is_active{border-color: {$hax_rechargedmf['css_mbcolor']};}
+.pay-plugin-tab-wrapper .grp_active a{ border-bottom: 2px solid {$hax_rechargedmf['css_mbcolor']};}
+.grp_switch .xf,.grp_switch .qh{border: 1px solid {$hax_rechargedmf['css_mbcolor']};}
+.pay-plugin-price-list-outside .is_active{background:0;}
+</style>
+<!--{/if}-->
+<script type="text/javascript" src="{$_G[siteurl]}source/plugin/hax_rechargedmf/js/jquery-1.12.4.js"></script>
+<script>jQuery.noConflict();</script>
+</head>
+<body>
+    <div class="alertbox"></div>
+    <div class="hax_blackdiv"></div>
+    <div class="hax_headnav">
+        <a class="hax_backbtn" href="javascript:history.back(-1);"></a>
+        <a class="hax_headtitle">{if $_GET['mod'] == 'czjl'}{lang hax_rechargedmf:tlang2}{elseif $_GET['mod'] == 'vip'}{lang hax_rechargedmf:tlang4}{elseif $_GET['mod'] == 'vipjl'&&!$_GET['tab']}{lang hax_rechargedmf:tlang5}{elseif $_GET['mod'] == 'vipjl'||$_GET['tab']==2}{lang hax_rechargedmf:tlang6}{else}{lang hax_rechargedmf:tlang1}{/if}</a>
+        <a class="hax_navbtn"></a>
+        <div class="hax_navbarbox">
+            <ul>
+                <!--{if $hax_rechargedmf['crd_switch']}-->
+                <li class="mn_jfcz"><a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook">{lang hax_rechargedmf:tlang1}</a></li>
+                <li class="mn_chjl"><a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=czjl">{lang hax_rechargedmf:tlang2}</a></li>
+                <!--{/if}-->
+                <!--{if $hax_rechargedmf['grp_switch']}-->
+                <li class="mn_hygm"><a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vip">{lang hax_rechargedmf:tlang4}</a></li>
+                <li class="mn_hyjl"><a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl">{lang hax_rechargedmf:tlang5}</a></li>
+                <li class="mn_qh"><a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl&tab=2">{lang hax_rechargedmf:tlang6}</a></li>
+                <!--{/if}-->
+                <li class="mn_shouye"><a href="{$_G[siteurl]}index.php">{lang hax_rechargedmf:tlang77}</a></li>
+            </ul>
+        </div> 
+    </div>
+<!--{if $_GET['mod'] == 'czjl'}-->
+    <div class="headimgbox" style="{if $hax_rechargedmf['sjbtt']}background:url($hax_rechargedmf['sjbtt']);background-size: cover;{/if}">
+        <ul class="crdinfo">
+            <li style="border-right: 1px solid #ddd;">
+                <span>{lang hax_rechargedmf:tlang78}</span>
+                <p class="headcrdnum">{$lcrdnum}<span class="headcrdname">{$lcrdname}</span></p>
+            </li>
+            <li>
+                <span>{lang hax_rechargedmf:tlang11}</span>
+                <p class="headcrdnum">{$ljmoney}<span class="headcrdname">{lang hax_rechargedmf:tlang8}</span></p>
+            </li>
+        </ul>
+        <ul class="other_crd">
+            <!--{loop $creditdata $key $crd}-->
+            <!--{eval if($key<1) continue;}-->
+            <!--{if $crd['state']==1}-->
+            <li><h4 class="part-balance-price">$crd['num']</h4><span class="balance-name-small">$crd['name']</span></li>
+            <!--{/if}-->
+            <!--{/loop}-->
+        </ul>
+    </div>
+    
+    <div class="order_tb">
+        <div class="order_tl"><p>{lang hax_rechargedmf:tlang79}</p></div>
+        <ul class="order_ul">
+            <!--{if !$czcount}-->
+            <div class="order_emp">{lang hax_rechargedmf:tlang13}</div>  
+            <!--{else}-->
+            <!--{loop $czlist $key $val}-->
+            <li>
+                <div class="ol_lia">{$val['ororkm']}: {$val['orderid']}</div>
+                <div class="ol_lib"><span>{$val['state']}</span><span class="ol_crd">___{$val['credit']}</span><span class="ol_lirt">{$val['money']}{lang hax_rechargedmf:tlang8}</span></div>
+                <div class="ol_lic" style=" margin-bottom: 0;"><span>{$val['time']}</span><span class="ol_lirt">{$val['type']}</span></div>
+            </li>
+            <!--{/loop}-->
+            <div class="order_bottom">
+                {$multi}
+            </div>
+            <!--{/if}-->
+        </ul>
+    </div>
+<!--{elseif $_GET['mod'] == 'vip'}-->
+    <div class="headbox">
+        <div class="headbgbox">{if $hax_rechargedmf['grp_mtt']}<img src="$hax_rechargedmf['grp_mtt']"/>{/if}</div>
+        <div class="headuserinfo">
+            <a href="{$_G[siteurl]}home.php?mod=space&uid=$_G['uid']" class="hax_useravatar">{avatar($_G['uid'],middle)}</a>
+            <a href="{$_G[siteurl]}home.php?mod=space&uid=$_G['uid']" class="hax_username">{$_G['username']}</a>
+            <a href="{$_G[siteurl]}home.php?mod=spacecp&ac=usergroup" class="hax_userinfo">
+                <span class="hax_usergroup">{lang hax_rechargedmf:tlang54} [ {$_G[group][grouptitle]} ]{if $_G[group][icon]}<span class="title-icon"><img src="{$grpicon}"></span>{/if}</span></br>
+                <span class="hax_groupdays">{lang hax_rechargedmf:tlang55}  {$nowgrouptime}</span>
+            </a>
+        </div>
+        <div class="headodstate"><p class="nowstate"></p></div>
+    </div>
+    <div class="grpallbox">
+        <div class="smimg" style="display:none;"><div class="oload"><div class="loadbox"><span class="flower-loader">Loading&#8230;</span></div></div></div>
+        <div class="pay-plugin-tab-wrapper">
+            {loop $groupdata $k $v}
+            <div class="pay-plugin-tab-item {$v['grp_active']}" grp="{$v['groupid']}"><a>{$v['name'][0]}</a></div>
+            {/loop}
+        </div>
+        <div class="hax_c">
+            {eval $i=0;}
+            {loop $groupdata $key $val}
+            <div class="hax_ctrl {if $i!=0}ahide{/if}">
+                <p class="grptip">{$val['name'][1]}</p>
+                <div class="pay-plugin-price-list-wrapper">
+                    <div class="pay-plugin-price-list-outside" style="">
+                        {eval $n=1;}
+                        {loop $val['moneyop'] $k $v}
+                        {if !$v[1][1]}{eval $v[1]=floatval($v[1]);}{/if}
+                        <div class="price_item {if $k==0}is_active{/if}" {if $val['width']}style="width:{$val['width']}px;"{/if} title="{lang hax_rechargedmf:tlang20}$v[0][0]{lang hax_rechargedmf:tlang29}" grptime="$v[0][0]" money="{if $v[1][1]}$v[1][0]{else}$v[1]{/if}" days="$v[0][0]" key="$n">
+                            {if $hax_rechargedmf['css_pccolor']}<div class="pay-plugin-price-bgcolor"></div>{/if}
+                            {if $v[2]}<div class="pay-plugin-price-icon">$v[2]</div>{/if}
+                            <div class="pay-plugin-price-name">$v[0][1]</div>
+                            <div class="pay-plugin-price-num">{lang hax_rechargedmf:tlang7}<span>{if $v[1][1]}$v[1][0]{else}$v[1]{/if}</span></div>
+                            {if $v[1][1]}<div class="pay-plugin-price-og-num"><span>{lang hax_rechargedmf:tlang7}</span>$v[1][1]</div>{/if}
+                        </div>
+                        {eval $n++;}
+                        {/loop}
+                    </div>
+                    <div class="pay-plugin-price-no-data" style="display: none;">{lang hax_rechargedmf:tlang21}</div>
+                </div>
+                <div class="clear"></div>
+                {if $val['modescr']}
+                <div class="user_right">
+                    {$val['modescr']}
+                </div>
+                <div class="clear"></div>
+                {/if}
+            </div>
+            {eval $i++;}
+            {/loop}
+        </div>
+        <div class="paymentbox">
+            <!--{if $hax_paysetup[1]['state']}-->
+            <div class="paymethod zfis" value="1">
+                <i class="alipayimg"></i><a>{lang hax_rechargedmf:tlang81}</a><span>{lang hax_rechargedmf:tlang82}</span><b class="pmstate"></b>
+            </div>
+            <!--{/if}-->
+            <!--{if $hax_paysetup[2]['state']}-->
+            <div class="paymethod {if !$hax_paysetup[1]['state']}zfis{/if}" value="2">
+                <i class="wxpayimg"></i><a>{lang hax_rechargedmf:slang28}</a><span>{lang hax_rechargedmf:tlang115}</span><b class="pmstate"></b>
+            </div>
+            <!--{/if}-->
+            <!--{if $_G['setting']['card']['open']}-->
+            <div class="paymethod {if !$hax_paysetup[1]['state'] && !$hax_paysetup[2]['state']}zfis{/if}" value="3">
+                <i class="cardimg"></i><a>{lang hax_rechargedmf:tlang73}</a><span>{lang hax_rechargedmf:tlang97}</span><b class="pmstate"></b>
+            </div>
+            <div class="cardbox" {if $hax_paysetup[1]['state']||$hax_paysetup[2]['state']}style="display:none"{/if}>
+                <input type="text" class="form-control" id="cardid" placeholder="{lang hax_rechargedmf:tlang32}" name="cardid">
+                <div class="kmtip">{if $hax_rechargedmf['kmgm']}{$hax_rechargedmf['kmgm']}{/if}</div>
+            </div>
+            <!--{/if}-->
+            <!--{if $grp_zfcrdname}-->
+            <div class="paymethod {if !$hax_paysetup[1]['state'] && !$hax_paysetup[2]['state'] && !$_G['setting']['card']['open']}zfis{/if}" value="4">
+                <i class="jfpayimg"></i><a>{$grp_zfopname}</a><span>{lang hax_rechargedmf:tlang105}</span><b class="pmstate"></b>
+            </div>
+            <div class="jfzfbox {if $hax_paysetup[1]['state']||$hax_paysetup[2]['state']||$_G['setting']['card']['open']}ahide{/if}">
+                <div class="keyongyue">{lang hax_rechargedmf:tlang78}: <b>{$grp_zfcrdnum}</b> {$grp_zfcrdname} <i class="jfcki"></i></div>
+                <div class="kmtip">{lang hax_rechargedmf:tlang100}</div>
+            </div>
+            <!--{/if}-->
+        </div>
+        <!--{if $hax_paysetup[1]['state']||$_G['setting']['card']['open']||$grp_zfcrdname}-->
+        <div class="zf_btn"><a href="javascript:void(0);" id="submit">{lang hax_rechargedmf:tlang30}&nbsp;&nbsp;<c>{lang hax_rechargedmf:tlang7}<span class="grp_price">0.00</span></c><d style="display:none;"><span class="jf_price">0</span>{$grp_zfcrdname}</d> / <span class="days"></span></a></div>
+        <!--{/if}-->
+        <!--{if !$hax_paysetup[1]['state']&&!$_G['setting']['card']['open']&&!$grp_zfcrdname}-->
+        <div class="allzfno">{lang hax_rechargedmf:tlang110}</div>
+        <!--{/if}-->
+        <div class="cztipbox">
+            <div class="cztip">
+                {$grp_dtip}
+            </div>
+        </div>
+        <div class="chaoshishuxin" style="display:none;"><img src="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/shuaxin.png"/></div>
+    </div>
+<script>
+jQuery(function() {
+    var group = jQuery(".pay-plugin-tab-item");
+    ncost = jQuery(".grp_price");
+    var yxgrp = jQuery(".grp_active");
+    var maxtime = {$hax_rechargedmf['lxtime']} * 60;
+    cxxding();
+    showdayss();
+    isIntoo();
+    calcrdprice();
+    
+    group.on("click", function() {
+        if(!jQuery(this).hasClass("grp_active")){
+            jQuery(this).siblings().removeClass("grp_active");
+            jQuery(this).addClass("grp_active");
+            var k = group.index(this);
+            jQuery(".hax_c .hax_ctrl").eq(k).removeClass("ahide");
+            jQuery(".hax_c .hax_ctrl").eq(k).siblings().addClass("ahide");
+            cxxding();
+            showdayss();
+            isIntoo();
+            calcrdprice();
+        }
+    });
+    jQuery(".price_item").on("click", function() {
+        if(!jQuery(this).hasClass("is_active")){
+            jQuery(this).siblings().removeClass("is_active");
+            jQuery(this).addClass("is_active");
+            var money = jQuery(this).attr("money");
+            ncost.html(money);
+            showdayss();
+            isIntoo();
+            calcrdprice();
+        }
+    });
+    function calcrdprice() {
+        {if $hax_paysetup[4]['state']}
+        var zfcrdnum = {$grp_zfcrdnum};
+        var bili = {$grp_zfcrdbili};
+        var crdnum = parseInt(jQuery(".is_active").attr('money') * bili);
+        var crdnum = crdnum==0 ? 1 : crdnum;
+        jQuery("#submit .jf_price").html(crdnum);
+        if(zfcrdnum>=crdnum){
+            jQuery(".jfcki").removeClass("ichno").attr("title",'{lang hax_rechargedmf:tlang101}');
+        }else{
+            jQuery(".jfcki").addClass("ichno").attr("title",'{lang hax_rechargedmf:tlang99}');
+        }
+        {/if}
+    }
+    jQuery(".paymethod").on("click", function() {
+        if(!jQuery(this).hasClass("zfis")){
+            var paytypes=jQuery(this).attr('value');
+            jQuery(this).addClass('zfis');jQuery(this).siblings().removeClass('zfis');
+            if(paytypes==1){
+                jQuery(".cardbox,.jfzfbox").addClass("ahide");
+            }
+            if(paytypes==3){
+                jQuery(".cardbox").show();
+                // jQuery(".jfzfbox").addClass("ahide");
+            }else{
+                jQuery(".cardbox").hide();
+            }
+            if(paytypes==4){
+                jQuery(".jfzfbox").removeClass("ahide");
+                jQuery("#submit c").hide();
+                jQuery("#submit d").show();
+            }else{
+                jQuery(".jfzfbox").addClass("ahide");
+                jQuery("#submit c").show();
+                jQuery("#submit d").hide();
+            }
+        }
+    });
+    jQuery("#submit").on("click", function() {
+        var paytype = jQuery(".zfis").attr('value');
+        if(!paytype){
+            return false;
+        }
+        var uids='$_G[uid]';
+        if(uids<1){
+            alertss('{lang hax_rechargedmf:tlang39}');
+            setTimeout(function() {window.location.href='{$_G[siteurl]}member.php?mod=logging&action=login&mobile=2&referer=plugin.php?id=hax_rechargedmf:czhook';}, 3000);
+            return false;
+        }
+        if(!acmaxx()){
+            alertss('{lang hax_rechargedmf:tlang40}');
+            return false;
+        }
+        if(paytype==1){
+            creategrporder('zfb');
+        }
+        if(paytype==2){
+            creategrporder('wxzf');
+        }
+        if(paytype==3){
+            kmgrporder();
+        }
+        if(paytype==4){
+            jfzfgrporder();
+        }
+    });
+    jQuery(".chaoshishuxin").on("click", function() {
+        maxtime = {$hax_rechargedmf['lxtime']} * 60;
+        jQuery(".chaoshishuxin").hide();
+        jQuery(".smimg").html('');
+        creategrporder();
+    });
+    function jfzfgrporder() {
+        {if $hax_paysetup[4]['state']}
+        if(jQuery(".jfcki").hasClass("ichno")){
+            alertss('{lang hax_rechargedmf:tlang102}');
+            return false;
+        }
+        var bili = {$grp_zfcrdbili};
+        var crdnum = parseInt(jQuery(".is_active").attr('money') * bili);
+        var crdnum = crdnum==0 ? 1 : crdnum;
+        var grpname = jQuery(".grp_active a").html();
+        var days = jQuery(".is_active").attr("days");
+        if(confirm('{lang hax_rechargedmf:tlang103}'+crdnum+'{$grp_zfcrdname}'+'{lang hax_rechargedmf:tlang104}'+days+'{lang hax_rechargedmf:tlang29}'+grpname+'?')){
+            var zfcrdid = {$hax_paysetup[4]['paymentkey01']};
+            if(zfcrdid){
+                jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+                    mod:"hy",
+                    paytype:"jfzf",
+                    money:ncost.html(),
+                    grpid:jQuery(".grp_active").attr("grp"),
+                    grptime:jQuery(".is_active").attr("days"),
+                    key:jQuery(".is_active").attr("key"),
+                    crdid:jQuery(".is_active").attr("crdid"),
+                    crdnum:jQuery(".is_active").attr("crdnum"),
+                    hash:'{FORMHASH}',
+                    
+                },function(r){
+                    console.log(r);
+                    var obj = JSON.parse(r.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                    // console.log(obj);
+                    if(obj['err']=="grp_jfzf_is_null"){
+                        alertss('{lang hax_rechargedmf:tlang49}');
+                    }else if(obj['msg']=='jfzf_success'){
+                        alertss('{lang hax_rechargedmf:tlang46}');
+                        setTimeout(function() {window.location.href='{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl';}, 3000);
+                    }
+                    
+                });
+            }
+        }
+        {/if}
+    }
+    function kmgrporder() {
+        var cid = jQuery("#cardid");
+        if(cid.val()){
+            jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+                mod:"hy",
+                paytype:"km",
+                cardid:cid.val(),
+                money:ncost.html(),
+                grpid:jQuery(".grp_active").attr("grp"),
+                grptime:jQuery(".is_active").attr("days"),
+                key:jQuery(".is_active").attr("key"),
+                crdid:jQuery(".is_active").attr("crdid"),
+                crdnum:jQuery(".is_active").attr("crdnum"),
+                hash:'{FORMHASH}',
+                
+            },function(r){
+                if(r=="km_weishuru"){
+                    alertss('{lang hax_rechargedmf:tlang41}');
+                }else if(r=="km_bucunzai"){
+                    alertss('{lang hax_rechargedmf:tlang42}');
+                }else if(r=="km_yishiyong"){
+                    alertss('{lang hax_rechargedmf:tlang43}');
+                }else if(r=="km_yiguoqi"){
+                    alertss('{lang hax_rechargedmf:tlang44}');
+                }else if(r=='km_mianzhibuzu'){
+                    alertss('{lang hax_rechargedmf:tlang45}');
+                }else if(r=='km_success'){
+                    // console.log(r);
+                     alertss('{lang hax_rechargedmf:tlang46}','{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl',5000);
+                }
+            });
+        }else{
+            alertss('{lang hax_rechargedmf:tlang41}');
+        }
+    }
+    function creategrporder(paytype) {
+        jQuery(".pay-plugin-tab-wrapper,.hax_c,.paymentbox,.zf_btn").hide();
+        jQuery(".smimg").show();
+        if(parseFloat($hax_rechargedmf['singlemin'])>ncost.html()){
+            alertss('{lang hax_rechargedmf:tlang48}'+ parseFloat($hax_rechargedmf['singlemin']) +'{lang hax_rechargedmf:tlang8}','refresh',3000);
+            setTimeout(function() {window.location.reload();}, 3000);
+            return false;
+        }
+        jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+            mod:"hy",
+            money:ncost.html(),
+            grpid:jQuery(".grp_active").attr("grp"),
+            paytype:paytype,
+            grptime:jQuery(".is_active").attr("days"),
+            key:jQuery(".is_active").attr("key"),
+            crdid:jQuery(".is_active").attr("crdid"),
+            crdnum:jQuery(".is_active").attr("crdnum"),
+            hash:'{FORMHASH}',
+            
+        },function(result){
+            var obj = JSON.parse(result);
+            console.log(result);
+            if(obj["err"]=="err001"){
+                console.log(obj["err"]);
+                alertss('{lang hax_rechargedmf:tlang48}'+ parseFloat($hax_rechargedmf['singlemin']) +'{lang hax_rechargedmf:tlang8}','refresh',3000);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            if(obj["err"]=="err002"){
+                console.log(obj["err"]);
+                alertss('{lang hax_rechargedmf:tlang49}','refresh',3000);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            if(obj["err"]=="err003"){
+                console.log(obj["err"]);
+                alertss('{lang hax_rechargedmf:tlang49}','refresh',3000);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            if(obj["err"]=="err004"){
+                console.log(obj["err"]);
+                alertss('{lang hax_rechargedmf:tlang40}','refresh',3000);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            jQuery(".smimg").html(obj['img']);
+            jQuery(".headuserinfo").hide();
+            jQuery(".headodstate .nowstate").html('{lang hax_rechargedmf:tlang80}');
+            jQuery(".headodstate").show();
+            if(paytype=='zfb'){
+                var str = '<div class="pay-tips">{lang hax_rechargedmf:tlang86}'+obj['outTradeNo']+'</div><div class="pay-tips">{lang hax_rechargedmf:tlang87}'+obj['money']+'{lang hax_rechargedmf:tlang8}</div><div class="pay-tips">{lang hax_rechargedmf:tlang27}<span id="timer" style="color:red">....</span>{lang hax_rechargedmf:tlang28}</div><div class="pay-tips">{lang hax_rechargedmf:tlang113}</br>{lang hax_rechargedmf:tlang26}</br>{lang hax_rechargedmf:tlang88}</br>{lang hax_rechargedmf:tlang116}</div>';
+            }else if(paytype=='wxzf'){
+                var str = '<div class="pay-tips">{lang hax_rechargedmf:tlang86}'+obj['outTradeNo']+'</div><div class="pay-tips">{lang hax_rechargedmf:tlang87}'+obj['money']+'{lang hax_rechargedmf:tlang8}</div><div class="pay-tips">{lang hax_rechargedmf:tlang27}<span id="timer" style="color:red">....</span>{lang hax_rechargedmf:tlang28}</div><div class="pay-tips">{lang hax_rechargedmf:tlang114}</br>{lang hax_rechargedmf:tlang88}</br>{lang hax_rechargedmf:tlang117}</div>';
+            }
+            jQuery(".smimg").append(str);
+            lunxun = setInterval(function(){ lunxunjieguo(obj['outTradeNo'],'grp',paytype) }, $hax_rechargedmf['lxjg']);
+            timer = setInterval(function(){ CountDown() }, 1000);
+            if(paytype=='zfb'){window.open(obj['aliurl']);}
+		});
+    }
+    function lunxunjieguo(outTradeNo,mod,paytype) {
+        var money = ncost.html();
+        if(paytype=='zfb'){
+            var url = '{$_G[siteurl]}plugin.php?id=hax_rechargedmf:aliquery';
+            jQuery.get(url,{
+                outTradeNo:outTradeNo,
+                mod:mod,
+            }, function (data) {
+                console.log(data);
+                var obj = JSON.parse(data.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                if (obj['trade_status'] == 'TRADE_SUCCESS'&&obj['out_trade_no'] == outTradeNo) {
+                    clearInterval(timer);
+                    clearInterval(lunxun);
+                    jQuery(".cztipbox,.smimg").hide();
+                    jQuery(".headodstate .nowstate").html('{lang hax_rechargedmf:tlang89}');
+                    alertss('{lang hax_rechargedmf:tlang90}','{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl',5000);
+                }else if(obj['trade_status'] == 'WAIT_BUYER_PAY'){
+                    jQuery(".headodstate .nowstate").html('{lang hax_rechargedmf:tlang50}');
+                }
+            });
+        }else if(paytype=='wxzf'){
+            var url = '{$_G[siteurl]}plugin.php?id=hax_rechargedmf:wxquery';
+            jQuery.get(url,{
+                outTradeNo:outTradeNo,
+                mod:mod,
+            }, function (data) {
+                console.log(data);
+                var obj = JSON.parse(data.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                if (obj['0'] == 'SUCCESS') {
+                    clearInterval(timer);
+                    clearInterval(lunxun);
+                    jQuery(".cztipbox,.smimg").hide();
+                    jQuery(".headodstate .nowstate").html('{lang hax_rechargedmf:tlang89}');
+                    alertss('{lang hax_rechargedmf:tlang90}','{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl',5000);
+                }
+            });
+        }
+    }
+    function CountDown() {
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = minutes + '{lang hax_rechargedmf:tlang51}' + seconds + '{lang hax_rechargedmf:tlang52}';
+            jQuery("#timer").html(msg);
+            // document.all["timer"].innerHTML = msg;
+                --maxtime;
+        } else{
+            clearInterval(timer);
+            clearInterval(lunxun);
+            jQuery(".headodstate .nowstate").html('{lang hax_rechargedmf:tlang91}');
+            jQuery(".chaoshishuxin").show();
+        }
+    }
+    function cxxding() {
+        jQuery(".price_item").each(function() {
+            jQuery(this).removeClass("is_active");
+        });
+        jQuery(".hax_ctrl").each(function() {
+            if(!jQuery(this).hasClass("ahide")){
+                var obj = jQuery(this).find('.price_item').eq(0).addClass("is_active");
+            }
+        });
+        var money = jQuery(".is_active").attr("money");
+        ncost.html(money);
+    }
+    function isIntoo() {
+        var money = ncost.html();
+        if(isInteger(Number(money))){
+                money += '.00';
+            }
+        ncost.html(money);
+    }
+    function showdayss() {
+        var days = jQuery(".is_active").attr("days");
+        if(days==0){
+            days = '{lang hax_rechargedmf:tlang47}';
+        }else{
+            days = days+'{lang hax_rechargedmf:tlang29}';
+        }
+        jQuery(".days").html(days);
+    }
+});
+</script>
 
+<!--{elseif $_GET['mod'] == 'vipjl'}-->
+    <div class="headbox">
+        <div class="headbgbox">{if $hax_rechargedmf['grp_mtt']}<img src="$hax_rechargedmf['grp_mtt']"/>{/if}</div>
+        <div class="headuserinfo">
+            <a href="{$_G[siteurl]}home.php?mod=space&uid=$_G['uid']" class="hax_useravatar">{avatar($_G['uid'],middle)}</a>
+            <a href="{$_G[siteurl]}home.php?mod=space&uid=$_G['uid']" class="hax_username">{$_G['username']}</a>
+            <a href="{$_G[siteurl]}home.php?mod=spacecp&ac=usergroup" class="hax_userinfo">
+                <span class="hax_usergroup">{lang hax_rechargedmf:tlang54} [ {$_G[group][grouptitle]} ]{if $_G[group][icon]}<span class="title-icon"><img src="{$grpicon}"></span>{/if}</span></br>
+                <span class="hax_groupdays">{lang hax_rechargedmf:tlang55}  {$nowgrouptime}</span>
+            </a>
+        </div>
+        <div class="headodstate"><p class="nowstate"></p></div>
+    </div>
+    <div class="grpallbox">
+        <div class="pay-plugin-tab-wrapper">
+            <div class="pay-plugin-tab-item {if $_GET['tab']!=2}grp_active{/if}"><a>{lang hax_rechargedmf:tlang5}</a></div>
+            <div class="pay-plugin-tab-item {if $_GET['tab']==2}grp_active{/if}"><a>{lang hax_rechargedmf:tlang6}</a></div>
+            <div class="clear"></div>
+        </div>
+    </div>
+        
+    <div class="dabody">
+        <div class="order_tb {if $_GET['tab']==2}ahide{/if}">
+            <div class="order_tl"><p>{lang hax_rechargedmf:tlang92}</p></div>
+            <ul class="order_ul">
+                <!--{if !$hycount}-->
+                <div class="order_emp">{lang hax_rechargedmf:tlang57}</div>
+                <!--{else}-->
+                <!--{loop $hylist $key $val}-->
+                <li>
+                    <div class="ol_lia">{$val['ororkm']}: {$val['orderid']}</div>
+                    <div class="ol_lib"><span>{$val['state']} <a style="font-size:14px;color:#607D8B;">{$val['grpname']}{$val['grouptime']}</a></span><span class="ol_lirt">{$val['money']}</span></div>
+                    <div class="ol_lic"><span>{lang hax_rechargedmf:tlang93}{$val['totime']}</span><span class="ol_lirt">{$val['type']}</span></div>
+                    <div class="ol_lic" style=" margin-bottom: 0;"><span>{lang hax_rechargedmf:tlang94}{$val['time']}</span><span class="ol_lirt">{$val['groupname']}{$val['credit']}</span></div>
+                </li>
+                <!--{/loop}-->
+                <div class="order_bottom">
+                    {$multi}
+                </div>
+                <!--{/if}-->
+            </ul>
+        </div>
+        <div class="order_tb {if !$_GET['tab']}ahide{/if}">
+            <div class="order_tl"><p>{lang hax_rechargedmf:tlang95}</p></div>
+            <ul class="order_ul">
+                {if $expirylist}
+                {loop $expirylist $k $v}
+                <li {if $k==$_G[group][groupid]}class="isgrpli"{/if}>
+                    <div class="grptitle"> {$v['grouptitle']} </div>
+                    <div class="grp_totime">
+                         {lang hax_rechargedmf:tlang55}  {if $v['time']}{$v['time']}{else}{lang hax_rechargedmf:tlang47}{/if}
+                    </div>
+                    <div class="grp_switch">
+                        {if $v['type']=='ext'}<a class="xf" href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vip">{lang hax_rechargedmf:tlang60}</a>{/if}
+                        {if !($_G['groupid']==$k)}{if !$v[noswitch]}<a class="qh" onclick="grpswitch('{$k}')">{lang hax_rechargedmf:tlang61}</a>{/if}{/if}
+                    </div>
+                </li>
+                {/loop}
+                {else}
+                <div class="order_emp">{lang hax_rechargedmf:tlang62}</div>
+                {/if}
+            </ul>
+        </div>
+    </div>
+<script>
+jQuery(function() {
+    var qhan = jQuery(".pay-plugin-tab-item");
+    qhan.on("click", function() {
+        if(!jQuery(this).hasClass("grp_active")){
+            jQuery(this).siblings().removeClass("grp_active");
+            jQuery(this).addClass("grp_active");
+            if(jQuery(".ttitle").html()=='{lang hax_rechargedmf:tlang5}'){
+                jQuery(".ttitle").html('{lang hax_rechargedmf:tlang6}');
+                
+            }else{
+                jQuery(".ttitle").html('{lang hax_rechargedmf:tlang5}');
+            }
+            var k = qhan.index(this);
+            jQuery(".dabody .order_tb").eq(k).removeClass("ahide");
+            jQuery(".dabody .order_tb").eq(k).siblings().addClass("ahide");
+        }
+    });
+});
+function grpswitch(groupid){
+    jQuery.get('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:swgrp&grpid='+groupid,function (r){
+        var r = JSON.parse(r);
+        if(r.state==1){
+            alertss('{lang hax_rechargedmf:tlang63}','refresh',2000);
+            return false;
+        }else{
+            alertss('{lang hax_rechargedmf:tlang64}');
+            console.log(r);
+            return false;
+        }
+    });
+}
+</script>
+<!--{else}-->
+    <div class="headimgbox" style="{if $hax_rechargedmf['sjbtt']}background:url($hax_rechargedmf['sjbtt']);background-size: cover;{/if}">
+        <h1>{lang hax_rechargedmf:tlang78}</h1>
+        <p><b class="headcrdnum">{$nowcrdst}</b><span class="headcrdname">{$crdnamest}</span></p>
+    </div>
+    <div class="allbox">
+        <div class="smimg" style="display:none;"><div class="oload"><div class="loadbox"><span class="flower-loader">Loading&#8230;</span></div></div></div>
+        <!--{if $hax_paysetup[1]['state']||$hax_paysetup[2]['state']}-->
+        <div class="crdnavbar">
+            <div class="jflxtext"><i></i>{lang hax_rechargedmf:tlang66}</div>
+            <!--{loop $creditdata $v}-->
+            <div class="pay-plugin-tab-item {$v['crd_active']}" nowcredit="{$v['nowcredit']}" bili='{$v['bili']}' creditname="{$v['creditname']}" value="{$v['creditid']}"><i></i>{$v['creditname']}</div>
+            <!--{/loop}-->
+        </div>
+        
+        <div class="hax_ctrl">
+            <!--{loop $creditdata $k $v}-->
+            <div class="trade-list-wrapper ahide {if $k==0}isshow{/if}">
+                <!--{loop $v['money'] $key $val}-->
+                <div class="trade-wrapper {if $val['crd']<1}suoding{/if}" money="{$val['mon']}" crd="{$val['crd']}">
+                    <div class="moneybox">
+                        <span>{$val['crd']}<span class="bb-name">{$v['creditname']}</span></span>
+                        <div class="money">{lang hax_rechargedmf:tlang7}{$val['mon']}</div>
+                        <!--{if $val['sendid']}-->
+                        <span class="send"><a>{lang hax_rechargedmf:tlang75}{$val['sendnum']}{$_G['setting']['extcredits'][$val['sendid']]['title']}</a></span>
+                        <!--{/if}-->
+                    </div>
+                </div>
+                <!--{/loop}-->
+                <!--{if $v['custom']}-->
+                <div class="trade-wrapper trade-customn" money="0" crd="0">
+                    <div class="enter-wrapper" style="display:none;">
+                        <input type="text" pattern="[0-9]*" class="zdysl" onkeyup='this.value=this.value.replace(/\D/gi,"")'> 
+                        <span class="bb-name">{$v['creditname']}</span>
+                        <div class="enter-tip">{lang hax_rechargedmf:tlang68}</div>
+                    </div>
+                    <div class="tips">{lang hax_rechargedmf:tlang69}</div>
+                </div>
+                <!--{/if}-->
+                <div class="clear"></div>
+            </div>
+            <!--{/loop}-->
+        
+        </div>
+        <!--{/if}-->
+        <!--{if $_G['setting']['card']['open']}-->
+        <div class="cardbox" {if $hax_paysetup[1]['state']||$hax_paysetup[2]['state']}style="display:none"{/if}>
+            <input type="text" class="form-control" id="cardid" placeholder="{lang hax_rechargedmf:tlang32}" name="cardid">
+            <div class="kmtip">{if $hax_rechargedmf['kmgm']}{$hax_rechargedmf['kmgm']}{/if}</div>
+        </div>
+        <!--{/if}-->
+        <div class="paymentbox">
+            <!--{if $hax_paysetup[1]['state']}-->
+            <div class="paymethod zfis" value="1">
+                <i class="alipayimg"></i><a>{lang hax_rechargedmf:tlang81}</a><span>{lang hax_rechargedmf:tlang82}</span><b class="pmstate"></b>
+            </div>
+            <!--{/if}-->
+            <!--{if $hax_paysetup[2]['state']}-->
+            <div class="paymethod {if !$hax_paysetup[1]['state']}zfis{/if}" value="2">
+                <i class="wxpayimg"></i><a>{lang hax_rechargedmf:slang28}</a><span>{lang hax_rechargedmf:tlang115}</span><b class="pmstate"></b>
+            </div>
+            <!--{/if}-->
+            <!--{if $_G['setting']['card']['open']}-->
+            <div class="paymethod {if !$hax_paysetup[1]['state'] && !$hax_paysetup[2]['state']}zfis{/if}" value="3">
+                <i class="cardimg"></i><a>{lang hax_rechargedmf:tlang73}</a><span>{lang hax_rechargedmf:tlang97}</span><b class="pmstate"></b>
+            </div>
+            <!--{/if}-->
+        </div>
+        <div class="zf_btn">
+            <!--{if $hax_paysetup[1]['state']}-->
+            <a id="submit">{lang hax_rechargedmf:tlang98}{lang hax_rechargedmf:tlang7}<span class="price">0.00</span></a>
+            <!--{/if}-->
+            <!--{if $_G['setting']['card']['open']}-->
+            <a id="kmsubmit" {if $hax_paysetup[1]['state']||$hax_paysetup[2]['state']}style="display:none;"{/if}>{lang hax_rechargedmf:tlang98}</a>
+            <!--{/if}-->
+        </div>
+        <!--{if !$hax_paysetup[1]['state']&&!$_G['setting']['card']['open']}-->
+        <div class="allzfno">{lang hax_rechargedmf:tlang110}</div>
+        <!--{/if}-->
+        <div class="cztipbox">
+            <div class="cztip">
+                {$xylj}
+            </div>
+        </div>
+        <div class="chaoshishuxin" style="display:none;"><img src="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/shuaxin.png"/></div>
+    </div>
+<script>
+jQuery(function() {
+    var czopt = jQuery(".trade-wrapper");
+    ncost = jQuery(".price");
+    var re = /([0-9]+\.[0-9]{2})[0-9]*/;
+    var maxtime = {$hax_rechargedmf['lxtime']} * 60;
+    
+    ncost.html(jQuery(".is-selected").attr("money"));
+    chongxinxuanding();
+    isIntoo();
+    
+    czopt.on("click", function() {
+        var zdy=jQuery(this).hasClass("trade-customn");
+        var crd = jQuery(this).attr("crd");
+        if(crd!=0 && !zdy){
+            if(!jQuery(this).hasClass("is-selected")){
+                jQuery(this).siblings().removeClass("is-selected");
+                jQuery(this).addClass("is-selected");
+                jQuery(".enter-wrapper").hide();
+                jQuery(".tips").show();
+                var money=jQuery(this).attr("money");
+                ncost.html(money);
+                isIntoo();
+            }
+        }else if(zdy){
+            if(!jQuery(this).hasClass("is-selected")){
+                jQuery(this).siblings().removeClass("is-selected");
+                jQuery(this).addClass("is-selected");
+                if(jQuery('.isshow .zdysl').val()){
+                    var money=jQuery(this).attr("money");
+                    ncost.html(money);
+                    isIntoo();
+                }
+            }
+        }
+    });
+    jQuery(".pay-plugin-tab-item").on("click", function() {
+        if(!jQuery(this).hasClass("crd_active")){
+            jQuery(this).siblings().removeClass("crd_active");
+            jQuery(this).addClass("crd_active");
+            var k = jQuery(".pay-plugin-tab-item").index(this);
+            jQuery(".hax_ctrl .trade-list-wrapper").eq(k).addClass("isshow");
+            jQuery(".hax_ctrl .trade-list-wrapper").eq(k).siblings().removeClass("isshow");
+            jQuery(".enter-wrapper").hide();
+            jQuery(".tips").show();
+            chongxinxuanding();
+            isIntoo();
+        }
+    });
+    jQuery(".trade-customn").on("click", function() {
+        jQuery(".enter-wrapper").show();
+        jQuery(".tips").hide();
+        jQuery(".enter-wrapper input").focus();
+        
+    });
+    jQuery(document).on("input propertychange",".is-selected .zdysl", function(e){
+        var bili = jQuery('.crd_active').attr("bili");
+        var zdydiv = jQuery(this).parents('.trade-customn');
+        if(!isNaN(jQuery(this).val())){
+            zdydiv.attr('money',(jQuery(this).val()/bili));
+            zdydiv.attr('crd',jQuery(this).val());
+        }
+        var money=zdydiv.attr('money').replace(re,"$1");
+        zdydiv.find(".enter-tip").hide();
+        if(!jQuery(this).val()){zdydiv.find(".enter-tip").show();}
+        ncost.html(money);
+        isIntoo();
+    });
+    jQuery(".paymethod").on("click", function() {
+        if(!jQuery(this).hasClass("zfis")){
+            var paytypes=jQuery(this).attr('value');
+            jQuery(this).addClass('zfis');jQuery(this).siblings().removeClass('zfis');
+            if(paytypes==3){
+                jQuery(".crdnavbar,.hax_ctrl").hide();jQuery(".cardbox").show();
+                jQuery("#submit").hide();jQuery("#kmsubmit").show();
+            }else if(paytypes==1||paytypes==2){
+                jQuery(".crdnavbar,.hax_ctrl").show();jQuery(".cardbox").hide();
+                jQuery("#kmsubmit").hide();jQuery("#submit").show();
+            }
+        }
+    });
+    jQuery("#submit").on("click", function() {
+        var uids='$_G[uid]';
+        if(uids<1){
+            alertss('{lang hax_rechargedmf:tlang39}');
+            setTimeout(function() {window.location.href='{$_G[siteurl]}member.php?mod=logging&action=login&mobile=2&referer=plugin.php?id=hax_rechargedmf:czhook';}, 3000);
+            return false;
+        }
+        if(!acmaxx()){
+            alertss('{lang hax_rechargedmf:tlang40}');
+            return false;
+        }
+        if(jQuery(".zfis").attr("value")==1){
+            var paytype = 'zfb';
+        }else if(jQuery(".zfis").attr("value")==2){
+            var paytype = 'wxzf';
+        }
+        createorder(paytype);
+    });
+    jQuery(".chaoshishuxin").on("click", function() {
+        maxtime = {$hax_rechargedmf['lxtime']} * 60;
+        jQuery(".chaoshishuxin").hide();
+        jQuery(".smimg").html('');
+        createorder();
+    });
+    jQuery("#kmsubmit").on("click", function() {
+        var uids='$_G[uid]';
+        if(uids<1){
+            alertss('{lang hax_rechargedmf:tlang39}');
+            setTimeout(function() {window.location.href='{$_G[siteurl]}member.php?mod=logging&action=login&mobile=2&referer=plugin.php?id=hax_rechargedmf:czhook';}, 3000);
+            return false;
+        }
+        var cid = jQuery("#cardid");
+        if(cid.val()){
+            jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+                mod:"jf",
+                paytype:"km",
+                cardid:cid.val(),
+                hash:'{FORMHASH}',
+            },function(r){
+                // var result = JSON.parse(r);
+                if(r=="km_weishuru"){
+                    alertss('{lang hax_rechargedmf:tlang41}');
+                }else if(r=="km_bucunzai"){
+                    alertss('{lang hax_rechargedmf:tlang42}');
+                }else if(r=="km_yishiyong"){
+                    alertss('{lang hax_rechargedmf:tlang43}');
+                }else if(r=="km_yiguoqi"){
+                    alertss('{lang hax_rechargedmf:tlang44}');
+                }else{
+                    alertss('{lang hax_rechargedmf:tlang74}'+r,'{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=czjl',5000);
+                    // window.location.reload();
+                }
+                console.log(r);
+            });
+        }else{
+            alertss('{lang hax_rechargedmf:tlang41}');
+        }
+    });
+    
+    function createorder(paytype) {
+        
+        jQuery(".crdnavbar,.hax_ctrl,.paymentbox,.zf_btn").hide();
+        jQuery(".smimg").show();
+        var yxcrd=jQuery('.crd_active');
+        if(parseFloat($hax_rechargedmf['singlemin'])>ncost.html()){
+            alertss('{lang hax_rechargedmf:tlang48}'+ parseFloat($hax_rechargedmf['singlemin']) +'{lang hax_rechargedmf:tlang8}','refresh',3000);
+            setTimeout(function() {window.location.reload();}, 3000);
+            return false;
+        }
+        var zdycrdnum = jQuery(".is-selected").hasClass("trade-customn") ? jQuery(".is-selected").attr("crd") : '';
+        jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+            mod:"jf",
+            money:ncost.html(),
+            credittype:yxcrd.attr("value"),
+            crd:jQuery(".is-selected").attr("crd"),
+            zdycrdnum:zdycrdnum,
+            paytype:paytype,
+            hash:'{FORMHASH}',
+        },function(result){
+            console.log(result);
+            var obj = JSON.parse(result);
+            if(obj["err"]=="err001"){
+                alertss('{lang hax_rechargedmf:tlang48}'+ parseFloat($hax_rechargedmf['singlemin']) +'{lang hax_rechargedmf:tlang8}','',3000);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+                
+            }
+            if(obj["err"]=="err002"){
+                alertss('{lang hax_rechargedmf:tlang49}','',3000);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            if(obj["err"]=="err004"){
+                console.log(obj["err"]);
+                alertss('{lang hax_rechargedmf:tlang40}','refresh',3000);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            jQuery(".smimg").html(obj['img']);
+            jQuery(".headimgbox h1").html(' ');
+            jQuery(".headcrdnum").html('{lang hax_rechargedmf:tlang80}');
+            jQuery('.headcrdname').html('');
+            if(paytype=='zfb'){
+                var str = '<div class="pay-tips">{lang hax_rechargedmf:tlang86}'+obj['outTradeNo']+'</div><div class="pay-tips">{lang hax_rechargedmf:tlang87}'+obj['money']+'{lang hax_rechargedmf:tlang8}</div><div class="pay-tips">{lang hax_rechargedmf:tlang27}<span id="timer" style="color:red">....</span>{lang hax_rechargedmf:tlang28}</div><div class="pay-tips">{lang hax_rechargedmf:tlang113}</br>{lang hax_rechargedmf:tlang26}</br>{lang hax_rechargedmf:tlang88}</br>{lang hax_rechargedmf:tlang116}</div>';
+            }else if(paytype=='wxzf'){
+                var str = '<div class="pay-tips">{lang hax_rechargedmf:tlang86}'+obj['outTradeNo']+'</div><div class="pay-tips">{lang hax_rechargedmf:tlang87}'+obj['money']+'{lang hax_rechargedmf:tlang8}</div><div class="pay-tips">{lang hax_rechargedmf:tlang27}<span id="timer" style="color:red">....</span>{lang hax_rechargedmf:tlang28}</div><div class="pay-tips">{lang hax_rechargedmf:tlang114}</br>{lang hax_rechargedmf:tlang88}</br>{lang hax_rechargedmf:tlang117}</div>';
+            }
+            jQuery(".smimg").append(str);
+            lunxun = setInterval(function(){ lunxunjieguo(obj['outTradeNo'],'crd',paytype) }, $hax_rechargedmf['lxjg']);
+            timer = setInterval(function(){ CountDown() }, 1000);
+            if(paytype=='zfb'){
+                window.open(obj['aliurl']);
+            }
+		});
+    }
+    function lunxunjieguo(outTradeNo,mod,paytype) {
+        var money = ncost.html();
+        if(paytype == 'zfb'){
+            var url = '{$_G[siteurl]}plugin.php?id=hax_rechargedmf:aliquery';
+            jQuery.get(url,{
+                outTradeNo:outTradeNo,
+                mod:mod,
+            }, function (data) {
+                console.log(data);
+                var obj = JSON.parse(data.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                if (obj['trade_status'] == 'TRADE_SUCCESS'&&obj['out_trade_no'] == outTradeNo) {
+                    clearInterval(timer);
+                    clearInterval(lunxun);
+                    jQuery(".cztipbox,.smimg").hide();
+                    jQuery(".headcrdnum").html('{lang hax_rechargedmf:tlang89}');
+                    jQuery('.headcrdname').html('');
+                    alertss('{lang hax_rechargedmf:tlang90}','{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=czjl',5000);
+                }else if(obj['trade_status'] == 'WAIT_BUYER_PAY'){
+                    jQuery(".headcrdnum").html('{lang hax_rechargedmf:tlang50}');
+                    jQuery('.headcrdname').html('');
+                }
+                // console.log(data);
+            });
+        }else if(paytype == 'wxzf'){
+            var url = '{$_G[siteurl]}plugin.php?id=hax_rechargedmf:wxquery';
+            jQuery.get(url,{
+                outTradeNo:outTradeNo,
+                mod:mod,
+            }, function (data) {
+                console.log(data);
+                var obj = JSON.parse(data.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                if (obj['0'] == 'SUCCESS') {
+                    clearInterval(timer);
+                    clearInterval(lunxun);
+                    jQuery(".cztipbox,.smimg").hide();
+                    jQuery(".headcrdnum").html('{lang hax_rechargedmf:tlang89}');
+                    jQuery('.headcrdname').html('');
+                    alertss('{lang hax_rechargedmf:tlang90}','{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=czjl',5000);
+                }
+                // console.log(data);
+            });
+        }
+    }
+    function CountDown() {
+        
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = minutes + '{lang hax_rechargedmf:tlang51}' + seconds + '{lang hax_rechargedmf:tlang52}';
+            jQuery("#timer").html(msg);
+            // document.all["timer"].innerHTML = msg;
+                --maxtime;
+        } else{
+            clearInterval(timer);
+            clearInterval(lunxun);
+            jQuery(".headcrdnum").html('{lang hax_rechargedmf:tlang91}');
+            jQuery('.headcrdname').html('');
+            jQuery(".chaoshishuxin").show();
+        }
+    }
+    function isIntoo() {
+        var money = ncost.html();
+        if(isInteger(Number(money))){
+                money += '.00';
+            }
+        ncost.html(money);
+    }
+    function chongxinxuanding() {
+        jQuery(".trade-wrapper").removeClass("is-selected");
+        jQuery('.isshow .trade-wrapper').each(function() {
+            var crd = jQuery(this).attr("crd");
+            if(!jQuery(this).hasClass("trade-customn")){
+                if(crd>=1){
+                jQuery(this).addClass("is-selected");
+                var money=jQuery(this).attr("money");
+                    ncost.html(money);
+                    return false;
+                }
+            }
+        });
+    }
+});
+</script>
+<!--{/if}-->
+<script>
+function alertss(text,url,stime){
+    var stime = stime ? stime : 3000;
+    jQuery('.alertbox').show().html(text);
+    setTimeout(function() {
+        jQuery('.alertbox').fadeOut();
+        if(url){
+            if(url=='refresh'){
+                window.location.reload();
+            }else{
+                window.location.href = url;
+            }
+        }
+    }, stime);
+}
+function isInteger(obj) {
+    return Math.floor(obj) === obj
+}
+function acmaxx() {
+    var money = ncost.html();
+    var cmax = parseFloat({$acmax})+parseFloat(money);
+    var amax = '$hax_rechargedmf[acmax]';
+    if(amax!='0'){
+        if(cmax > amax){
+            return false;
+        }else{
+            return true;
+        }
+    }else{
+        return true;
+    }
+}
+jQuery(document).on("click",".hax_navbtn,.hax_blackdiv", function(e){
+    if(jQuery('.hax_navbarbox').is(":hidden")){
+        jQuery('.hax_navbarbox').fadeIn(130);
+        jQuery('.hax_blackdiv').fadeIn(130);
+    }else{
+        jQuery('.hax_navbarbox').fadeOut(130);
+        jQuery('.hax_blackdiv').fadeOut(130);
+    }
+});
+</script>
+</body>
+</html>
