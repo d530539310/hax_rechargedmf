@@ -1,0 +1,48 @@
+<style>
+input,textarea{border: 1px solid #ddd; border-radius: 3px;}
+.btbt{margin-top: 10px; padding: 5px 15px; border: 0; background: #607D8B; color: #fff; border-radius: 3px;cursor: pointer;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;-o-transition:all 0.2s linear;-ms-transition:all 0.2s linear;transition:all 0.2s linear;}
+</style>
+<form name="cpform" method="post" autocomplete="off" action="{$pluginurl}" id="cpform">
+    <input type="hidden" name="formhash" value="{FORMHASH}">
+    <input type="hidden" id="formscrolltop" name="scrolltop" value="">
+    <input type="hidden" name="anchor" value="">
+    <table class="tb tb2 ">
+        <tbody>
+            <tr>
+                <th colspan="15" class="partition">{$lang['slang101']}</th>
+            </tr>
+            <tr class="header">
+                <th>{$lang['slang4']}</th>
+                <th>{$lang['slang102']}</th>
+                <th>{$lang['slang100']}</th>
+                <th>{$lang['slang103']}</th>
+                <th>{$lang['slang104']}</th>
+                <th>{$lang['slang105']}</th>
+                <th>{$lang['slang108']}</th>
+                <th>{$lang['slang107']}</th>
+                <th>{$lang['slang5']}</th>
+            </tr>
+            <!--{loop $sgroups $k $v}-->
+            <tr class="hover">
+                <td width="60"><input class="checkbox" type="checkbox" name="grpform[$k][state]" {$v['checked']} value="1"></td>
+                <td width="180">{$lang['slang99']}{$v['groupid']}[{$v['grouptitle']}]<input name="grpform[$k][creditid]" type="hidden" value="{$k}"></td>
+                <td width="200"><input name="grpform[$k][name]" type="text" value="{$v['name']}" style="width: 180px;" placeholder="{$lang['slang106']}" ></td>
+                <td width="220"><textarea name="grpform[$k][moneyop]" style="width: 200px; height: 80px;resize:both;" placeholder="{$lang['slang109']}" >{$v['moneyop']}</textarea></td>
+                <td width="100"><textarea name="grpform[$k][scredit]" style="width: 80px; height: 80px;resize:both;" placeholder="{$lang['slang109']}" >{$v['scredit']}</textarea></td>
+                <td width="220"><textarea name="grpform[$k][descr]" style="width: 200px; height: 80px;resize:both;" placeholder="{$lang['slang109']}" >{$v['descr']}</textarea></td>
+                <td width="220"><textarea name="grpform[$k][modescr]" style="width: 200px; height: 80px;resize:both;" placeholder="{$lang['slang109']}" >{$v['modescr']}</textarea></td>
+                <td><input name="grpform[$k][width]" value="{$v['width']}" style="width:50px"> </td>
+                <td><input name="grpform[$k][shunxu]" value="{$v['shunxu']}" style="width:50px"> </td>
+            </tr>
+            <!--{/loop}-->
+            <tr>
+                <td colspan="15">
+                    <div class="fixsel"><input type="submit" class="btbt" id="submit_forumset" name="forumset" value="{lang hax_rechargedmf:slang92}"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<script type="text/JavaScript">
+_attachEvent(document.documentElement, 'keydown', function (e) { entersubmit(e, 'forumset'); });
+</script>

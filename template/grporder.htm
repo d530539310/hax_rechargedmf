@@ -1,0 +1,138 @@
+<link rel="stylesheet" type="text/css" href="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/adminstyle.css?v=1.0">
+<script src="{$_G[siteurl]}static/js/calendar.js"></script>
+<script type="text/javascript" src="{$_G[siteurl]}source/plugin/hax_rechargedmf/js/jquery-1.12.4.js"></script>
+<script>jQuery.noConflict();</script>
+<div class="fbody">
+<div class="log_top">
+    <div class="log_tblock"><div class="ltb_b" style="background:#ff8762;">
+        <div class="ltb_ctrl "><h>{if $acountarr['jrhycount']}{$acountarr['jrhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang76}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['zrhycount']}{$acountarr['zrhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang80}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['bzhycount']}{$acountarr['bzhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang81}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['szhycount']}{$acountarr['szhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang82}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['byhycount']}{$acountarr['byhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang83}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['syhycount']}{$acountarr['syhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang84}</p></div>
+    </div></div>
+    <div class="log_tblock"><div class="ltb_b" style="background:#56bdde;">
+        <div class="ltb_ctrl "><h>{if $acountarr['jrhymoney']}{$acountarr['jrhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang77}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['zrhymoney']}{$acountarr['zrhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang85}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['bzhymoney']}{$acountarr['bzhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang86}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['szhymoney']}{$acountarr['szhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang87}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['byhymoney']}{$acountarr['byhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang88}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['syhymoney']}{$acountarr['syhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang89}</p></div>
+    </div></div>
+    <div class="log_tblock"><div class="ltb_b" style="background:#b198dc;">
+        <div class="ltb_ctrl "><h>{if $acountarr['cghycount']}{$acountarr['cghycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang78}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['wzfhycount']}{$acountarr['wzfhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang90}</p></div>
+        <div class="ltb_ctrl ahide"><h>{if $acountarr['allhycount']}{$acountarr['allhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang91}</p></div>
+    </div></div>
+    <div class="log_tblock"><div class="ltb_b" style="background:#fec400;">
+        <div class="ltb_ctrl "><h>{if $acountarr['cghymoney']}{$acountarr['cghymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang79}</p></div>
+    </div></div>
+</div>
+<form name="cpform" method="post" autocomplete="off" action="$pluginurl" id="cpform">
+<input type="hidden" name="formhash" value="{FORMHASH}">
+<input type="hidden" id="formscrolltop" name="scrolltop" value="">
+<input type="hidden" name="anchor" value="">
+<div class="log_top" style="padding-right:100px;">
+<div class="form_tb" style="min-width:260px;">
+    <div class="form_div">
+        <b>{lang hax_rechargedmf:slang38}:</b>
+        <select name="state">
+            <option value="0">{lang hax_rechargedmf:slang39}</option>
+            <option value="2" {if $_GET['state']==2}selected="selected"{/if}>{lang hax_rechargedmf:slang40}</option>
+            <option value="1" {if $_GET['state']==1}selected="selected"{/if}>{lang hax_rechargedmf:slang41}</option>
+        </select>
+    </div>
+    
+    <div class="form_div">
+        <b>{lang hax_rechargedmf:slang15}:</b>
+        <select name="type">
+            <option value="0">{lang hax_rechargedmf:slang39}</option>
+            <option value="1" {if $_GET['type']==1}selected="selected"{/if}>{lang hax_rechargedmf:slang27}</option>
+            <option value="3" {if $_GET['type']==3}selected="selected"{/if}>{lang hax_rechargedmf:slang29}</option>
+            <option value="4" {if $_GET['type']==4}selected="selected"{/if}>{lang hax_rechargedmf:slang94}</option>
+        </select>
+    </div>
+</div>
+<div class="form_tb ft_m" style="min-width:332px;">
+    <div class="form_div"><b>{lang hax_rechargedmf:slang42}:</b>
+    <input name="username" value="$username" type="text" /></div>
+    <div class="form_div"><b>{lang hax_rechargedmf:slang11}:</b>
+    <input name="orderid" value="$orderid" type="text" /></div>
+</div>
+<div class="form_tb" style="min-width:465px;">
+    <div class="form_div" style="margin-right: 0;"><b>{lang hax_rechargedmf:slang18}:</b>
+    <input name="optime" type="text" value="$optime" onclick="showcalendar(event, this)" size="15"/> - <input name="edtime" type="text" onclick="showcalendar(event, this)" size="15" value="$edtime"/></div>
+    <input type="submit" class="btbt" name="searchsubmit" value="{lang hax_rechargedmf:slang43}">
+    <input type="submit" class="btbt" name="del_all" value="{lang hax_rechargedmf:slang9}">
+</div>
+</div>
+<table class="log_table">
+<tr class="log_title">
+<td>{lang hax_rechargedmf:slang44}</td>
+<td>{lang hax_rechargedmf:slang11}</td>
+<td>{lang hax_rechargedmf:slang42}</td>
+<td>{lang hax_rechargedmf:slang45}</td>
+<td>{lang hax_rechargedmf:slang46}</td>
+<td>{lang hax_rechargedmf:slang14}</td>
+<td>{lang hax_rechargedmf:slang15}</td>
+<td>{lang hax_rechargedmf:slang16}</td>
+<td>{lang hax_rechargedmf:slang17}</td>
+<td>{lang hax_rechargedmf:slang30}</td>
+<td>{lang hax_rechargedmf:slang18}</td>
+<td>{lang hax_rechargedmf:slang19}</td>
+</tr>
+{if $hylist}
+<!--{loop $hylist $val}-->
+<tr class="log_row">
+<td><input type="checkbox" class="checkbox" name="delete[]" value="{$val['orderid']}" /></td>
+<td>{$val['orderid']}</td>
+<td><a href="{$_G[siteurl]}home.php?mod=space&uid={$val['uid']}" target="_blank">{$val['usname']}</a></td>
+<td>{$val['groupname']}|{$val['grpname']}{$val['grouptime']}(+{$val['creditt']})</td>
+<td>{$val['totime']}</td>
+<td>{$val['money']}</td>
+<td>{$val['type']}</td>
+<td>{$val['state']}</td>
+<td>{if $val['sn']}{$val['sn']}{else}{$blank}{/if}</td>
+<td>{if $val['payid']}{$val['payid']}{else}{$blank}{/if}</td>
+<td>{$val['time']}</td>
+<td>{if $val['zftime']}{$val['zftime']}{else}{$blank}{/if}</td>
+</tr>
+<!--{/loop}-->
+{else}
+<tr class="log_row">
+<td colspan="12">{lang hax_rechargedmf:slang63}</td>
+</tr>
+{/if}
+<tr>
+<td colspan="12" class="bottombt">
+    <input type="checkbox" name="chkall" id="chkallQoua" class="checkbox" onclick="checkAll('prefix', this.form, 'delete')"><label for="chkallQoua">{lang hax_rechargedmf:slang58}</label>
+    <input type="submit" class="btbt" id="submit_forumsets" name="forumsets" title="submit_tips" value="{lang hax_rechargedmf:slang52}">
+    <div class="log_amount">{lang hax_rechargedmf:slang59} {lang hax_rechargedmf:slang60} = {$thisczcount}{lang hax_rechargedmf:slang53} , {lang hax_rechargedmf:slang61} = {if $thisczmoney}{$thisczmoney}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</div>
+    {$multi}
+</td>
+</tr>
+</table>
+</form>
+<div style="color: #F44336; margin: 10px;">{lang hax_rechargedmf:slang95}</div>
+</div>
+<script>
+jQuery(function() {
+    jQuery(document).on("click",".log_tblock", function(e){
+        var obj = jQuery(this).find(".ltb_ctrl");
+        if(obj.length>1){
+            obj.each(function(key , value) {
+                if(!jQuery(value).hasClass("ahide")){
+                    jQuery(value).addClass("ahide");
+                    if(key>=obj.length-1){
+                        obj.eq(0).removeClass("ahide");
+                    }else{
+                        obj.eq(key+1).removeClass("ahide");
+                    }
+                    return false;
+                }
+            });
+        }
+    });
+});
+</script>

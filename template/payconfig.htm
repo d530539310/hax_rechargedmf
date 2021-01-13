@@ -1,0 +1,217 @@
+<style>
+input,textarea{border: 1px solid #ddd; border-radius: 3px;}
+a,a:hover { color: #333; text-decoration: none; }
+.kmglurl,.paytpblock{-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;-o-transition:all 0.2s linear;-ms-transition:all 0.2s linear;transition:all 0.2s linear;}
+#cpform{min-width:1280px;width:1280px;}
+.btbt{margin-top: 10px; padding: 5px 15px; border: 0; background: #607D8B; color: #fff; border-radius: 3px;cursor: pointer;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;-o-transition:all 0.2s linear;-ms-transition:all 0.2s linear;transition:all 0.2s linear;}
+.paytpblock{height: 180px; box-sizing: border-box; margin: 15px; opacity: 0.8;}
+.paytpblock:hover{opacity: 1;}
+.blockbg{ padding: 15px; height: 100%; display: flex; background: #f5f5f5; box-sizing: border-box;}
+.paytpimg{width: 40px; height: 40px; margin: 10px auto;}
+.paytpimg img{width:100%; height:100%;object-fit: cover;}
+.paytitle, .appkey{position:relative;width: 180px;min-width: 180px; height: 100%;margin-right: 20px;text-align: center;}
+.paytitle .payup .align-self p{ font-size: 20px; font-weight: 600; padding-bottom: 10px;text-align: center;}
+.payup{height:85px;display:flex;}
+.align-self{flex:1;align-self: center;}
+.align-self textarea{width: 200px; height: 60px;resize:both;vertical-align: middle;}
+.paydes span{color: #949494;}
+.appkey{width: 300px;}
+.paytitle .checkbox{width: 20px; height: 20px; flex: 1; align-self: center;}
+.paycheck{width: 100px; min-width: 100px; margin: 0;}
+.kmglurl{padding: 10px 20px; border: 1px solid #d4d4d4; cursor: pointer; background: #E5E5E5; border-radius: 3px; font-size: 20px; font-weight: 600;position: absolute; top: 51.5px; left: 82px;}
+.kmglurl:hover{border: 1px solid #868686;background: #f5f5f5;}
+.fixsel{margin:15px;}
+.zfb .isck{background:#bbe1ff;}
+.wxzf .isck{background:#c5f3c6;}
+.kmzf .isck{background:#feb;}
+.jfzf .isck{background:#f5c9c6;}
+</style>
+<script type="text/javascript" src="{$_G[siteurl]}source/plugin/hax_rechargedmf/js/jquery-1.12.4.js"></script>
+<script>jQuery.noConflict();</script>
+<form name="cpform" method="post" autocomplete="off" action="{$pluginurl}" id="cpform">
+    <input type="hidden" name="formhash" value="{FORMHASH}">
+    <input type="hidden" id="formscrolltop" name="scrolltop" value="">
+    <input type="hidden" name="anchor" value="">
+<div class="paytpblock zfb">
+    <div class="blockbg {if $hax_paysetup[1]['state']}isck{/if}">
+    <div class="paytitle">
+        <div class="payup">
+            <div class="align-self">
+                <div class="paytpimg"><img src="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/pay_04.png"/></div>
+                <p>{$lang['slang111']}</p>
+                <input name="payform[1][paymethodid]" type="hidden" value="1">
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang112']}</span></div>
+    </div>
+    <div class="appkey">
+        <div class="payup">
+            <div class="align-self">
+                <b>APPID:</b>
+                <input name="payform[1][paymentkey01]" type="text" value="{$hax_paysetup[1]['paymentkey01']}" style="width: 180px;" placeholder="APPID" >
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang119']}</span></div>
+    </div>
+    <div class="appkey">
+        <div class="payup">
+            <div class="align-self">
+                <b>{$lang['slang120']}:</b>
+                <textarea name="payform[1][paymentkey02]" placeholder="{$lang['slang120']}" >{$hax_paysetup[1]['paymentkey02']}</textarea>
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang122']}</span></div>
+    </div>
+    <div class="appkey">
+        <div class="payup">
+            <div class="align-self">
+                <b>{$lang['slang121']}:</b>
+                <textarea name="payform[1][paymentkey03]" placeholder="{$lang['slang121']}" >{$hax_paysetup[1]['paymentkey03']}</textarea>
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang123']}</span></div>
+    </div>
+    <div class="paytitle paycheck">
+        <div class="payup">
+            <input class="checkbox" type="checkbox" name="payform[1][state]" {if $hax_paysetup[1]['state']}checked="checked"{/if} value="1">
+        </div>
+        <div class="paydes"><span>{$lang['slang4']}</span></div>
+    </div>
+    </div>
+</div>
+<div class="paytpblock wxzf">
+    <div class="blockbg {if $hax_paysetup[2]['state']}isck{/if}">
+    <div class="paytitle">
+        <div class="payup">
+            <div class="align-self">
+                <div class="paytpimg"><img src="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/wxpay88.png"/></div>
+                <p>{$lang['slang113']}</p>
+                <input name="payform[2][paymethodid]" type="hidden" value="2">
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang114']}</span></div>
+    </div>
+    <div class="appkey">
+        <div class="payup">
+            <div class="align-self">
+                <b>APPID:</b>
+                <input name="payform[2][paymentkey01]" type="text" value="{$hax_paysetup[2]['paymentkey01']}" style="width: 180px;" placeholder="APPID" >
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang126']}</span></div>
+    </div>
+    <div class="appkey">
+        <div class="payup">
+            <div class="align-self">
+                <b>{$lang['slang124']}:</b>
+                <input name="payform[2][paymentkey02]" type="text" value="{$hax_paysetup[2]['paymentkey02']}" style="width: 180px;" placeholder="{$lang['slang124']}" >
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang127']}</span></div>
+    </div>
+    <div class="appkey">
+        <div class="payup">
+            <div class="align-self">
+                <b>{$lang['slang125']}:</b>
+                <textarea name="payform[2][paymentkey03]" placeholder="{$lang['slang125']}" >{$hax_paysetup[2]['paymentkey03']}</textarea>
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang128']}</span></div>
+    </div>
+    <div class="paytitle paycheck">
+        <div class="payup">
+            <input class="checkbox" type="checkbox" name="payform[2][state]" {if $hax_paysetup[2]['state']}checked="checked"{/if} value="1">
+        </div>
+        <div class="paydes"><span>{$lang['slang4']}</span></div>
+    </div>
+    </div>
+</div>
+<div class="paytpblock kmzf">
+    <div class="blockbg {if $_G['setting']['card']['open']}isck{/if}">
+    <div class="paytitle">
+        <div class="payup">
+            <div class="align-self">
+                <div class="paytpimg"><img src="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/kmpay02.png"/></div>
+                <p>{$lang['slang115']}</p>
+                <input name="payform[3][paymethodid]" type="hidden" value="3">
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang116']}</span></div>
+    </div>
+    <div class="appkey">
+        <a href="{ADMINSCRIPT}?action=card&operation=manage" class="kmglurl" target="_blank">{$lang['slang130']}</a>
+    </div>
+    <div class="appkey">
+        <a href="{ADMINSCRIPT}?action=card&operation=type" class="kmglurl" target="_blank">{$lang['slang131']}</a>
+    </div>
+    <div class="appkey">
+        <a href="{ADMINSCRIPT}?action=card&operation=make" class="kmglurl" target="_blank">{$lang['slang132']}</a>
+    </div>
+    <div class="paytitle paycheck">
+        <div class="payup">
+            <input class="checkbox" type="checkbox" {if $_G['setting']['card']['open']}checked="checked"{/if} disabled="disabled">
+        </div>
+        <div class="paydes"><span>{$lang['slang129']}</span></div>
+    </div>
+    </div>
+</div>
+<div class="paytpblock jfzf">
+    <div class="blockbg {if $hax_paysetup[4]['state']}isck{/if}">
+    <div class="paytitle">
+        <div class="payup">
+            <div class="align-self">
+                <div class="paytpimg"><img src="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/jfpay.png"/></div>
+                <p>{$lang['slang117']}</p>
+                <input name="payform[4][paymethodid]" type="hidden" value="4">
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang118']}</span></div>
+    </div>
+    <div class="appkey">
+        <div class="payup">
+            <div class="align-self">
+                <b>{$lang['slang93']}</b>
+                <input name="payform[4][paymentkey01]" type="text" value="{$hax_paysetup[4]['paymentkey01']}" style="width: 180px;" placeholder="{$lang['slang93']}" >
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang133']}</span></div>
+    </div>
+    <div class="appkey">
+        <div class="payup">
+            <div class="align-self">
+                <b>{$lang['slang134']}:</b>
+                <input name="payform[4][paymentkey02]" type="text" value="{$hax_paysetup[4]['paymentkey02']}" style="width: 180px;" placeholder="{$lang['slang134']}" >
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang135']}</span></div>
+    </div>
+    <div class="appkey">
+        <div class="payup">
+            <div class="align-self">
+                <!--<b>{$lang['slang3']}:</b>-->
+            </div>
+        </div>
+        <div class="paydes"><span>{$lang['slang136']}</span></div>
+    </div>
+    <div class="paytitle paycheck">
+        <div class="payup">
+            <input class="checkbox" type="checkbox" name="payform[4][state]" {if $hax_paysetup[4]['state']}checked="checked"{/if} value="1">
+        </div>
+        <div class="paydes"><span>{$lang['slang4']}</span></div>
+    </div>
+    </div>
+</div>
+<div class="fixsel"><input type="submit" class="btbt" id="submit_forumset" name="forumset" value="{lang hax_rechargedmf:slang92}"></div>
+</form>
+<script>
+jQuery(function() {
+    jQuery(document).on("change",".checkbox", function(e){
+        var pbk = jQuery(this).parents('.paytpblock');
+        if(!jQuery(this).is(":checked")){
+            pbk.find('.blockbg').removeClass('isck');
+        }else{
+            pbk.find('.blockbg').addClass('isck');
+        }
+    });
+});
+</script>

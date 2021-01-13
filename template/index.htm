@@ -1,1 +1,1584 @@
+<!--{template common/header}-->
+<script type="text/javascript" src="{$_G[siteurl]}source/plugin/hax_rechargedmf/js/jquery-1.12.4.js"></script>
+<script>jQuery.noConflict();</script>
+<style id="diy_style" type="text/css"></style>
+<link rel="stylesheet" type="text/css" href="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/czstyle.css?v=1.6">
+<link rel="stylesheet" href="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/flower.css" type="text/css">
+<!--{if $hax_rechargedmf['css_pccolor']}-->
+<style>
+.trade-wrapper.is-selected:not(.trade-customn)>div>div,.qrpay-group .qrpay-content .price,.agreement a,.b-info .balance-price,.b-info .balance-name,.bb-quan b,.pay-plugin-price-num,.pay-plugin-qr-code-num,.grp_active .pay-plugin-tab-item-txt,.zfcgtip a, .kmtip a,.grp_active .pay-plugin-tab-item-txt, .crd_active .pay-plugin-tab-item-txt,.grp_switch .qh{color:{$hax_rechargedmf['css_pccolor']};}
+.pg strong{background-color:{$hax_rechargedmf['css_pccolor']};}
+.send,.hax_pay a, .kmpaysb a, .jfpaysb a,.b-info .button,.title-group .selected-title:after,.grp_switch .xf{background:{$hax_rechargedmf['css_pccolor']};}
+.trade-wrapper.is-selected{border: 1px solid {$hax_rechargedmf['css_pccolor']};color: {$hax_rechargedmf['css_pccolor']};}
+.zfis,.qrpay-group .qr-icon-group,.grp_switch .xf,.grp_switch .qh{border: 1px solid {$hax_rechargedmf['css_pccolor']};}
+a.bp_box_bot_click{border-left: 2px solid {$hax_rechargedmf['css_pccolor']};color: {$hax_rechargedmf['css_pccolor']};}
+.bp_box_bot a:hover{color: {$hax_rechargedmf['css_pccolor']};opacity: 0.8;}
+.is_active {border: 1px solid {$hax_rechargedmf['css_pccolor']};box-shadow: 0px 0px 10px 1px {$hax_rechargedmf['css_pccolor']};}
+.pay-plugin-qr-code-wrapper{border: 1px solid {$hax_rechargedmf['css_pccolor']};}
+</style>
+<!--{/if}-->
+<!--{if $hax_rechargedmf['css_hd'] == 1}-->
+<style>#hd{display:none;}</style>
+<!--{/if}-->
+<!--{if $hax_rechargedmf['css_hdwidth'] == 1}-->
+<style>
+.wp{width:1130px;}
+#nv{background-repeat: repeat-x;background-position: 0 -33px;}
+</style>
+<!--{/if}-->
+<!--{if $hax_rechargedmf['css_switchwidth'] == 1}-->
+<style>
+#switchwidth{display:none;}
+</style>
+<!--{/if}-->
+<div class="bp-center-box">
+    <!--[diy=hax_rechargedmfdiy00]--><div id="hax_rechargedmfdiy00" class="area"></div><!--[/diy]-->
+    <div id="bp_left">
+        <div id="bp_user_box">
+            <div class="user-info" style="">
+                <div class="bp-user-box-top"><span><!--{avatar($_G['uid'],middle)}--></span>
+                    <p>$_G['username']</p>
+                    <div class="bp-user-box">
+                        <div class="bp-user-box-bb">$_G[group][grouptitle]</div>
+                        <div class="bp-user-box-bk">{$lcrdname}<i>{$lcrdnum}</i></div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="bp_menu_box">
+            <!--[diy=hax_rechargedmfdiy05]--><div id="hax_rechargedmfdiy05" class="area"></div><!--[/diy]-->
+            <!--{if $hax_rechargedmf['crd_switch']}-->
+            <div class="bp_box">
+                <div class="bp_box_top"><i class="bp_icon"></i>
+                    <p>{lang hax_rechargedmf:tlang1}</p>
+                </div>
+                <div class="bp_box_bot">
+                    <a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook" {if !$_GET['mod']}class="bp_box_bot_click"{/if}>{lang hax_rechargedmf:tlang1}</a> 
+                    <a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=czjl" {if $_GET['mod']=='czjl'}class="bp_box_bot_click"{/if}>{lang hax_rechargedmf:tlang2}</a></div>
+            </div>
+            <!--{/if}-->
+            <!--[diy=hax_rechargedmfdiy06]--><div id="hax_rechargedmfdiy06" class="area"></div><!--[/diy]-->
+            <!--{if $hax_rechargedmf['grp_switch']}-->
+            <div class="bb_box">
+                <div class="bp_box_top"><i class="bp_icon" style="background-position: -5px -38px;"></i>
+                    <p>{lang hax_rechargedmf:tlang3}</p>
+                </div>
+                <div class="bp_box_bot">
+                    <a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vip" {if $_GET['mod']=='vip'}class="bp_box_bot_click"{/if}>{lang hax_rechargedmf:tlang4}</a> 
+                    <a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl" {if $_GET['mod']=='vipjl' && $_GET['tab']!='2'}class="bp_box_bot_click"{/if}>{lang hax_rechargedmf:tlang5}</a> 
+                    <a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl&tab=2" {if $_GET['tab']=='2'}class="bp_box_bot_click"{/if}>{lang hax_rechargedmf:tlang6}</a>
+                </div>
+            </div>
+            <!--{/if}-->
+            <!--{if (in_array($_G['groupid'], $allod_grp))}-->
+            <div class="bb_box">
+                <div class="bp_box_top"><i class="allod_icon"></i>
+                    <p>{lang hax_rechargedmf:tlang106}</p>
+                </div>
+                <div class="bp_box_bot">
+                    <a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=allczod" {if $_GET['mod']=='allczod'}class="bp_box_bot_click"{/if}>{lang hax_rechargedmf:tlang107}</a> 
+                    <a href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=allvipod" {if $_GET['mod']=='allvipod'}class="bp_box_bot_click"{/if}>{lang hax_rechargedmf:tlang108}</a> 
+                </div>
+            </div>
+            <!--{/if}-->
+            <!--[diy=hax_rechargedmfdiy07]--><div id="hax_rechargedmfdiy07" class="area"></div><!--[/diy]-->
+        </div>
+    </div>
+    <div class="alertbox"></div>
+    <!--{if $_GET['mod'] == 'allczod'||$_GET['mod'] == 'allvipod'}-->
+    <link rel="stylesheet" type="text/css" href="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/adminstyle.css?v=1.0">
+    <script src="static/js/calendar.js"></script>
+    <style>
+    .bp-center-box{width:98%;display: flex;}
+    #bp_left { max-width: 220px;min-width: 220px; flex: 0.2;}
+    .bp-right{flex: auto;width:auto;min-width:890px;}
+    .trade-list{overflow:auto;}
+    </style>
+    <!--{if $hax_rechargedmf['css_hdwidth'] == 1}-->
+    <style>
+    .wp{width:98%;}
+    </style>
+    <!--{/if}-->
+    <script>
+    jQuery(function() {
+        jQuery(document).on("click",".log_tblock", function(e){
+            var obj = jQuery(this).find(".ltb_ctrl");
+            if(obj.length>1){
+                obj.each(function(key , value) {
+                    if(!jQuery(value).hasClass("ahide")){
+                        jQuery(value).addClass("ahide");
+                        if(key>=obj.length-1){
+                            obj.eq(0).removeClass("ahide");
+                        }else{
+                            obj.eq(key+1).removeClass("ahide");
+                        }
+                        return false;
+                    }
+                });
+            }
+        });
+    });
+    </script>
+    <!--{/if}-->
+    <!--{if $_GET['mod'] == 'allczod'}-->
+    <div class="bp-right">
+        <div>
+            <div class="bb-intro-top">
+                <a class="b-icon-title">{lang hax_rechargedmf:tlang107}</a>
+                <div class="b-question">
+                    <div class="b-question-icon"></div> 
+                    <a href="{$wtlj}" target="_blank" class="b-question-title">{lang hax_rechargedmf:tlang9}</a>
+                </div>
+            </div>
+            <div class="trade-list">
+                <div class="fbody">
+                <div class="log_top">
+                    <div class="log_tblock"><div class="ltb_b" style="background:#ff8762;">
+                        <div class="ltb_ctrl "><h>{if $acountarr['jrcjcount']}{$acountarr['jrcjcount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang54}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['zrcjcount']}{$acountarr['zrcjcount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang64}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['bzcjcount']}{$acountarr['bzcjcount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang65}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['szcjcount']}{$acountarr['szcjcount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang66}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['bycjcount']}{$acountarr['bycjcount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang67}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['sycjcount']}{$acountarr['sycjcount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang68}</p></div>
+                    </div></div>
+                    <div class="log_tblock"><div class="ltb_b" style="background:#56bdde;">
+                        <div class="ltb_ctrl "><h>{if $acountarr['jrcjmoney']}{$acountarr['jrcjmoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang55}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['zrcjmoney']}{$acountarr['zrcjmoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang69}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['bzcjmoney']}{$acountarr['bzcjmoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang70}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['szcjmoney']}{$acountarr['szcjmoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang71}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['bycjmoney']}{$acountarr['bycjmoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang72}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['sycjmoney']}{$acountarr['sycjmoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang73}</p></div>
+                    </div></div>
+                    <div class="log_tblock"><div class="ltb_b" style="background:#b198dc;">
+                        <div class="ltb_ctrl "><h>{if $acountarr['cgzscount']}{$acountarr['cgzscount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang56}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['wzfzscount']}{$acountarr['wzfzscount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang74}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['allzscount']}{$acountarr['allzscount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang75}</p></div>
+                    </div></div>
+                    <div class="log_tblock"><div class="ltb_b" style="background:#fec400;">
+                        <div class="ltb_ctrl "><h>{if $acountarr['cgzsmoney']}{$acountarr['cgzsmoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang57}</p></div>
+                    </div></div>
+                </div>
+                <form name="cpform" method="post" autocomplete="off" action="{$pluginurl}" id="cpform">
+                <input type="hidden" name="formhash" value="{FORMHASH}">
+                <input type="hidden" id="formscrolltop" name="scrolltop" value="">
+                <input type="hidden" name="anchor" value="">
+                <div class="log_top" style="padding-right:100px;">
+                <div class="form_tb" style="min-width:260px;">
+                    <div class="form_div">
+                        <b>{lang hax_rechargedmf:slang38}:</b>
+                        <select name="state">
+                            <option value="0">{lang hax_rechargedmf:slang39}</option>
+                            <option value="2" {if $_GET['state']==2}selected="selected"{/if}>{lang hax_rechargedmf:slang40}</option>
+                            <option value="1" {if $_GET['state']==1}selected="selected"{/if}>{lang hax_rechargedmf:slang41}</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form_div">
+                        <b>{lang hax_rechargedmf:slang15}:</b>
+                        <select name="type">
+                            <option value="0">{lang hax_rechargedmf:slang39}</option>
+                            <option value="1" {if $_GET['type']==1}selected="selected"{/if}>{lang hax_rechargedmf:slang27}</option>
+                            <option value="3" {if $_GET['type']==3}selected="selected"{/if}>{lang hax_rechargedmf:slang29}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form_tb ft_m" style="min-width:332px;">
+                    <div class="form_div"><b>{lang hax_rechargedmf:slang42}:</b>
+                    <input name="username" value="$username" type="text" /></div>
+                    <div class="form_div"><b>{lang hax_rechargedmf:slang11}:</b>
+                    <input name="orderid" value="$orderid" type="text" /></div>
+                </div>
+                <div class="form_tb" style="min-width:465px;">
+                    <div class="form_div" style="margin-right: 0;"><b>{lang hax_rechargedmf:slang18}:</b>
+                    <input name="optime" type="text" value="$optime" onclick="showcalendar(event, this)" size="15"/> - <input name="edtime" type="text" onclick="showcalendar(event, this)" size="15" value="$edtime"/></div>
+                    <input type="submit" class="btbt" name="searchsubmit" value="{lang hax_rechargedmf:slang43}">
+                    <!--<input type="submit" class="btbt" id="del_all" name="del_all" value="{lang hax_rechargedmf:slang9}">-->
+                </div>
+                </div>
+                <table class="log_table">
+                <tr class="log_title">
+                <!--<td>{lang hax_rechargedmf:slang44}</td>-->
+                <td>{lang hax_rechargedmf:slang11}</td>
+                <td>{lang hax_rechargedmf:slang12}</td>
+                <td>{lang hax_rechargedmf:slang13}</td>
+                <td>{lang hax_rechargedmf:slang14}</td>
+                <td>{lang hax_rechargedmf:slang15}</td>
+                <td>{lang hax_rechargedmf:slang16}</td>
+                <td>{lang hax_rechargedmf:slang17}</td>
+                <td>{lang hax_rechargedmf:slang30}</td>
+                <td>{lang hax_rechargedmf:slang18}</td>
+                <td>{lang hax_rechargedmf:slang19}</td>
+                </tr>
+                {if $czlist}
+                <!--{loop $czlist $val}-->
+                <tr class="log_row">
+                <!--<td><input type="checkbox" class="checkbox" name="delete[]" value="{$val['orderid']}" /></td>-->
+                <td>{$val['orderid']}</td>
+                <td><a href="{$_G[siteurl]}home.php?mod=space&uid={$val['uid']}" target="_blank">{$val['usname']}</a></td>
+                <td>{$val['cradit']}</td>
+                <td>{$val['money']}{lang hax_rechargedmf:tlang8}</td>
+                <td>{$val['type']}</td>
+                <td>{$val['state']}</td>
+                <td>{if $val['sn']}{$val['sn']}{else}{$blank}{/if}</td>
+                <td>{if $val['payid']}{$val['payid']}{else}{$blank}{/if}</td>
+                <td>{$val['time']}</td>
+                <td>{if $val['zftime']}{$val['zftime']}{else}{$blank}{/if}</td>
+                </tr>
+                <!--{/loop}-->
+                {else}
+                <tr class="log_row">
+                <td colspan="11">{lang hax_rechargedmf:slang63}</td>
+                </tr>
+                {/if}
+                <tr>
+                <td colspan="11" class="bottombt">
+                    <!--<input type="checkbox" name="chkall" id="chkallQoua" class="checkbox" onclick="checkAll('prefix', this.form, 'delete')"><label for="chkallQoua">{lang hax_rechargedmf:slang58}</label>-->
+                    <!--<input type="submit" class="btbt" id="submit_forumsets" name="forumsets" title="submit_tips" value="{lang hax_rechargedmf:slang52}">-->
+                    <div class="log_amount">{lang hax_rechargedmf:slang59} {lang hax_rechargedmf:slang60} = {$thisczcount}{lang hax_rechargedmf:slang53} , {lang hax_rechargedmf:slang61} = {if $thisczmoney}{$thisczmoney}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</div>
+                    {$multi}
+                </td>
+                </tr>
+                </table>
+                
+                </form>
+                <div style="color: #99a2aa; margin: 10px;">{lang hax_rechargedmf:tlang109}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--{elseif $_GET['mod'] == 'allvipod'}-->
+    <div class="bp-right">
+        <div>
+            <div class="bb-intro-top">
+                <a class="b-icon-title">{lang hax_rechargedmf:tlang108}</a>
+                <div class="b-question">
+                    <div class="b-question-icon"></div> 
+                    <a href="{$wtlj}" target="_blank" class="b-question-title">{lang hax_rechargedmf:tlang9}</a>
+                </div>
+            </div>
+            <div class="trade-list">
+                <div class="fbody">
+                <div class="log_top">
+                    <div class="log_tblock"><div class="ltb_b" style="background:#ff8762;">
+                        <div class="ltb_ctrl "><h>{if $acountarr['jrhycount']}{$acountarr['jrhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang76}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['zrhycount']}{$acountarr['zrhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang80}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['bzhycount']}{$acountarr['bzhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang81}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['szhycount']}{$acountarr['szhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang82}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['byhycount']}{$acountarr['byhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang83}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['syhycount']}{$acountarr['syhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang84}</p></div>
+                    </div></div>
+                    <div class="log_tblock"><div class="ltb_b" style="background:#56bdde;">
+                        <div class="ltb_ctrl "><h>{if $acountarr['jrhymoney']}{$acountarr['jrhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang77}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['zrhymoney']}{$acountarr['zrhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang85}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['bzhymoney']}{$acountarr['bzhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang86}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['szhymoney']}{$acountarr['szhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang87}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['byhymoney']}{$acountarr['byhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang88}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['syhymoney']}{$acountarr['syhymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang89}</p></div>
+                    </div></div>
+                    <div class="log_tblock"><div class="ltb_b" style="background:#b198dc;">
+                        <div class="ltb_ctrl "><h>{if $acountarr['cghycount']}{$acountarr['cghycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang78}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['wzfhycount']}{$acountarr['wzfhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang90}</p></div>
+                        <div class="ltb_ctrl ahide"><h>{if $acountarr['allhycount']}{$acountarr['allhycount']}{else}0{/if}{lang hax_rechargedmf:slang53}</h><p>{lang hax_rechargedmf:slang91}</p></div>
+                    </div></div>
+                    <div class="log_tblock"><div class="ltb_b" style="background:#fec400;">
+                        <div class="ltb_ctrl "><h>{if $acountarr['cghymoney']}{$acountarr['cghymoney']}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</h><p>{lang hax_rechargedmf:slang79}</p></div>
+                    </div></div>
+                </div>
+                <form name="cpform" method="post" autocomplete="off" action="{$pluginurl}" id="cpform">
+                <input type="hidden" name="formhash" value="{FORMHASH}">
+                <input type="hidden" id="formscrolltop" name="scrolltop" value="">
+                <input type="hidden" name="anchor" value="">
+                <div class="log_top" style="padding-right:100px;">
+                <div class="form_tb" style="min-width:260px;">
+                    <div class="form_div">
+                        <b>{lang hax_rechargedmf:slang38}:</b>
+                        <select name="state">
+                            <option value="0">{lang hax_rechargedmf:slang39}</option>
+                            <option value="2" {if $_GET['state']==2}selected="selected"{/if}>{lang hax_rechargedmf:slang40}</option>
+                            <option value="1" {if $_GET['state']==1}selected="selected"{/if}>{lang hax_rechargedmf:slang41}</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form_div">
+                        <b>{lang hax_rechargedmf:slang15}:</b>
+                        <select name="type">
+                            <option value="0">{lang hax_rechargedmf:slang39}</option>
+                            <option value="1" {if $_GET['type']==1}selected="selected"{/if}>{lang hax_rechargedmf:slang27}</option>
+                            <option value="3" {if $_GET['type']==3}selected="selected"{/if}>{lang hax_rechargedmf:slang29}</option>
+                            <option value="4" {if $_GET['type']==4}selected="selected"{/if}>{lang hax_rechargedmf:slang94}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form_tb ft_m" style="min-width:332px;">
+                    <div class="form_div"><b>{lang hax_rechargedmf:slang42}:</b>
+                    <input name="username" value="$username" type="text" /></div>
+                    <div class="form_div"><b>{lang hax_rechargedmf:slang11}:</b>
+                    <input name="orderid" value="$orderid" type="text" /></div>
+                </div>
+                <div class="form_tb" style="min-width:465px;">
+                    <div class="form_div" style="margin-right: 0;"><b>{lang hax_rechargedmf:slang18}:</b>
+                    <input name="optime" type="text" value="$optime" onclick="showcalendar(event, this)" size="15"/> - <input name="edtime" type="text" onclick="showcalendar(event, this)" size="15" value="$edtime"/></div>
+                    <input type="submit" class="btbt" name="searchsubmit" value="{lang hax_rechargedmf:slang43}">
+                    <!--<input type="submit" class="btbt" id="del_all" name="del_all" value="{lang hax_rechargedmf:slang9}">-->
+                </div>
+                </div>
+                <table class="log_table">
+                <tr class="log_title">
+                <!--<td>{lang hax_rechargedmf:slang44}</td>-->
+                <td>{lang hax_rechargedmf:slang11}</td>
+                <td>{lang hax_rechargedmf:slang42}</td>
+                <td>{lang hax_rechargedmf:slang45}</td>
+                <td>{lang hax_rechargedmf:slang46}</td>
+                <td>{lang hax_rechargedmf:slang14}</td>
+                <td>{lang hax_rechargedmf:slang15}</td>
+                <td>{lang hax_rechargedmf:slang16}</td>
+                <td>{lang hax_rechargedmf:slang17}</td>
+                <td>{lang hax_rechargedmf:slang30}</td>
+                <td>{lang hax_rechargedmf:slang18}</td>
+                <td>{lang hax_rechargedmf:slang19}</td>
+                </tr>
+                {if $hylist}
+                <!--{loop $hylist $val}-->
+                <tr class="log_row">
+                <!--<td><input type="checkbox" class="checkbox" name="delete[]" value="{$val['orderid']}" /></td>-->
+                <td>{$val['orderid']}</td>
+                <td><a href="{$_G[siteurl]}home.php?mod=space&uid={$val['uid']}" target="_blank">{$val['usname']}</a></td>
+                <td>{$val['groupname']}|{$val['grpname']}{$val['grouptime']}(+{$val['creditt']})</td>
+                <td>{$val['totime']}</td>
+                <td>{$val['money']}</td>
+                <td>{$val['type']}</td>
+                <td>{$val['state']}</td>
+                <td>{if $val['sn']}{$val['sn']}{else}{$blank}{/if}</td>
+                <td>{if $val['payid']}{$val['payid']}{else}{$blank}{/if}</td>
+                <td>{$val['time']}</td>
+                <td>{if $val['zftime']}{$val['zftime']}{else}{$blank}{/if}</td>
+                </tr>
+                <!--{/loop}-->
+                {else}
+                <tr class="log_row">
+                <td colspan="12">{lang hax_rechargedmf:slang63}</td>
+                </tr>
+                {/if}
+                <tr>
+                <td colspan="12" class="bottombt">
+                    <!--<input type="checkbox" name="chkall" id="chkallQoua" class="checkbox" onclick="checkAll('prefix', this.form, 'delete')"><label for="chkallQoua">{lang hax_rechargedmf:slang58}</label>-->
+                    <!--<input type="submit" class="btbt" id="submit_forumsets" name="forumsets" title="submit_tips" value="{lang hax_rechargedmf:slang52']}">-->
+                    <div class="log_amount">{lang hax_rechargedmf:slang59} {lang hax_rechargedmf:slang60} = {$thisczcount}{lang hax_rechargedmf:slang53} , {lang hax_rechargedmf:slang61} = {if $thisczmoney}{$thisczmoney}{else}0.00{/if}{lang hax_rechargedmf:tlang8}</div>
+                    {$multi}
+                </td>
+                </tr>
+                </table>
+                
+                </form>
+                <div style="color: #F44336; margin: 10px;">{lang hax_rechargedmf:slang95}</div>
+                <div style="color: #99a2aa; margin: 10px;">{lang hax_rechargedmf:tlang109}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--{elseif $_GET['mod'] == 'czjl'}-->
+    <div class="bp-right">
+        <div>
+            <div class="bb-intro-top">
+                <a class="b-icon-title">{lang hax_rechargedmf:tlang2}</a>
+                <div class="b-question">
+                    <div class="b-question-icon"></div> 
+                    <a href="$wtlj" target="_blank" class="b-question-title">{lang hax_rechargedmf:tlang9}</a>
+                </div>
+            </div>
+            <!--[diy=hax_rechargedmfdiy01]--><div id="hax_rechargedmfdiy01" class="area"></div><!--[/diy]-->
+            <div class="trade-list">
+                <div class="b-info">
+                    <p class="info-tip">{lang hax_rechargedmf:tlang10}</p>
+                    <h3 class="balance-price">{$lcrdnum}</h3> <span class="balance-name">{$lcrdname}</span>
+                    <span class="bb-quan">{lang hax_rechargedmf:tlang11}<b>{if $ljmoney}{$ljmoney}{else}0.00{/if}</b> {lang hax_rechargedmf:tlang8}</span>
+                    <a href="plugin.php?id=hax_rechargedmf:czhook" class="button">{lang hax_rechargedmf:tlang12}</a>
+                    <div class="dividing-line"></div>
+                    <div class="balance-footer">
+                        <!--{loop $creditdata $key $crd}-->
+                        <!--{eval if($key<1) continue;}-->
+                        <!--{if $crd['state']==1}-->	
+                        <div class="balance-part">
+                            <h4 class="part-balance-price">$crd['num']</h4> <span
+                                class="balance-name-small">$crd['name']</span>
+                        </div>
+                        <!--{/if}-->
+                        <!--{/loop}-->
+                    </div>
+                </div>
+                <!--{if !$czcount}-->
+                <div class="nolist">
+                    <p class="order_emp">{lang hax_rechargedmf:tlang13}</p>
+                </div>
+                <!--{else}-->
+                <div class="el-table el-table--fit el-table--enable-row-hover el-table--enable-row-transition" style="width: 100%;">
+                    <div class="el-table__header-wrapper">
+                        <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 856px;">
+                            <colgroup>
+                                <!--<col name="el-table_4_column_20" width="140">-->
+                                <col name="el-table_4_column_21" width="200">
+                                <col name="el-table_4_column_22" width="80">
+                                <col name="el-table_4_column_23" width="120">
+                                <col name="el-table_4_column_24" width="80">
+                                <col name="el-table_4_column_25" width="80">
+                            </colgroup>
+                            <thead class="has-gutter">
+                                <tr class="">
+                                    <!--<th colspan="1" rowspan="1" class="el-table_4_column_20     is-leaf">-->
+                                    <!--    <div class="cell">{lang hax_rechargedmf:tlang14}</div>-->
+                                    <!--</th>-->
+                                    <th colspan="1" rowspan="1" class="el-table_4_column_21     is-leaf">
+                                        <div class="cell">{lang hax_rechargedmf:tlang15}</div>
+                                    </th>
+                                    <th colspan="1" rowspan="1" class="el-table_4_column_22   text-right  is-leaf">
+                                        <div class="cell">{lang hax_rechargedmf:tlang16}</div>
+                                    </th>
+                                    <th colspan="1" rowspan="1" class="el-table_4_column_23   text-right  is-leaf">
+                                        <div class="cell">{lang hax_rechargedmf:tlang17}</div>
+                                    </th>
+                                    <th colspan="1" rowspan="1" class="el-table_4_column_24   text-right  is-leaf">
+                                        <div class="cell">{lang hax_rechargedmf:tlang18}</div>
+                                    </th>
+                                    <th colspan="1" rowspan="1" class="el-table_4_column_25   text-right  is-leaf">
+                                        <div class="cell">{lang hax_rechargedmf:tlang19}</div>
+                                    </th>
+                                    <th class="gutter" style="width: 0px; display: none;"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="el-table__body-wrapper is-scrolling-none">
+                        <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 856px;">
+                            <colgroup>
+                                <!--<col name="el-table_4_column_20" width="140">-->
+                                <col name="el-table_4_column_21" width="200">
+                                <col name="el-table_4_column_22" width="80">
+                                <col name="el-table_4_column_23" width="120">
+                                <col name="el-table_4_column_24" width="80">
+                                <col name="el-table_4_column_25" width="80">
+                            </colgroup>
+                            <tbody>
+                                <!--{loop $czlist $key $val}-->
+                                
+                                <tr class="el-table__row">
+                                    <!--<td class="el-table_4_column_20  ">-->
+                                    <!--    <div class="cell" style="font-size: 12px;color:#607D8B;">$val['time']</div>-->
+                                    <!--</td>-->
+                                    <td class="el-table_4_column_21  ">
+                                        <div class="cell">$val['orderid']</br><span style="font-size: 12px;color:#607D8B;">$val['time']</span></div>
+                                    </td>
+                                    <td class="el-table_4_column_22  text-right">
+                                        <div class="cell"><span>{lang hax_rechargedmf:tlang7}$val['money']</span></div>
+                                    </td>
+                                    <td class="el-table_4_column_23  text-right">
+                                        <div class="cell"><div class="lb_credit">$val['credit']</div></div>
+                                    </td>
+                                    <td class="el-table_4_column_24  text-right">
+                                        <div class="cell">$val['type']</div>
+                                    </td>
+                                    <td class="el-table_4_column_25  text-right">
+                                        <div class="cell"><span class="lb_state">$val['state']</span></div>
+                                    </td>
+                                </tr>
+                                <!--{/loop}-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                $multi
+                <!--{/if}-->
+                <!--[diy=hax_rechargedmfdiy08]--><div id="hax_rechargedmfdiy08" class="area"></div><!--[/diy]-->
+            </div>
+        </div>
+    </div>
+    <!--{elseif $_GET['mod'] == 'vip'}-->
+    <div class="bp-right">
+        <div>
+            <div class="bb-intro-top">
+                <a class="b-icon-title">{lang hax_rechargedmf:tlang4}</a>
+                <div class="b-question">
+                    <div class="b-question-icon"></div> 
+                    <a href="$wtlj" target="_blank" class="b-question-title">{lang hax_rechargedmf:tlang9}</a>
+                </div>
+            </div>
+            <!--[diy=hax_rechargedmfdiy02]--><div id="hax_rechargedmfdiy02" class="area"></div><!--[/diy]-->
+            <div class="trade-list">
+                <div class="zhedang"></div>
+                <div class="pay-plugin-tab-wrapper">
+                    {loop $groupdata $k $v}
+                    <div class="pay-plugin-tab-item {$v['grp_active']}" grp="{$v['groupid']}">
+                        <div class="pay-plugin-tab-item-txt">{$v['name'][0]}</div>
+                        <div class="pay-plugin-tab-item-txt-info">{$v['name'][1]}</div>
+                    </div>
+                    {/loop}
+                </div>
+                <div class="hax_c">
+                    {eval $i=0;}
+                    {loop $groupdata $key $val}
+                    <div class="hax_ctrl {if $i!=0}ahide{/if}">
+                        <div class="pay-plugin-price-list-wrapper">
+                            <div class="pay-plugin-price-list-outside" style="">
+                                <div id="payScroll" class="pay-plugin-price-list-con" style="transform: translateX(0px);">
+                                    {eval $n=1;}
+                                    {loop $val['moneyop'] $k $v}
+                                    {if !$v[1][1]}{eval $v[1]=floatval($v[1]);}{/if}
+                                    <div class="price_item {if $k==0}is_active{/if}" {if $val['width']}style="width:{$val['width']}px;"{/if} title="{lang hax_rechargedmf:tlang20}$v[0][0]{lang hax_rechargedmf:tlang29}" grptime="$v[0][0]" money="{if $v[1][1]}$v[1][0]{else}$v[1]{/if}" days="$v[0][0]" key="$n">
+                                        {if $v[2]}<div class="pay-plugin-price-icon">$v[2]</div>{/if}
+                                        <div class="pay-plugin-price-name">$v[0][1]</div>
+                                        <div class="pay-plugin-price-num">{lang hax_rechargedmf:tlang7}{if $v[1][1]}$v[1][0]{else}$v[1]{/if}</div>
+                                        {if $v[1][1]}<div class="pay-plugin-price-og-num"><span>{lang hax_rechargedmf:tlang7}</span>$v[1][1]</div>{/if}
+                                    </div>
+                                    {eval $n++;}
+                                    {/loop}
+                                </div>
+                            </div>
+                            <div class="pay-plugin-price-no-data" style="display: none;">{lang hax_rechargedmf:tlang21}</div>
+                        </div>
+                        <div class="clear"></div>
+                        {if $val['descr']}
+                        <div class="user_right">
+                            {$val['descr']}
+                        </div>
+                        <div class="clear"></div>
+                        {/if}
+                    </div>
+                    {eval $i++;}
+                    {/loop}
+                </div>
+                <div class="pay-plugin-qr-wrapper">
+                    <div class="pay-plugin-qr-left">
+                        <!--{if $hax_paysetup[1]['state']}-->
+                        <div class="pay-plugin-qr-item zfb zf_active">{lang hax_rechargedmf:tlang23}</div>
+                        <!--{/if}-->
+                        <!--{if $hax_paysetup[2]['state']}-->
+                        <div class="pay-plugin-qr-item wxzf {if !$hax_paysetup[1]['state']}zf_active{/if}">{lang hax_rechargedmf:slang28}</div>
+                        <!--{/if}-->
+                        <!--{if $_G['setting']['card']['open']}-->
+                        <div class="pay-plugin-qr-item kmzf {if !$hax_paysetup[1]['state']&&!$hax_paysetup[2]['state']}zf_active{/if}">{lang hax_rechargedmf:tlang24}</div>
+                        <!--{/if}-->
+                        <!--{if $grp_zfcrdname}-->
+                        <div class="pay-plugin-qr-item jfzf {if !$hax_paysetup[1]['state']&&!$hax_paysetup[2]['state']&&!$_G['setting']['card']['open']}zf_active{/if}">{$grp_zfopname}</div>
+                        <!--{/if}-->
+                    </div>
+                    <div class="pay-plugin-qr-right">
+                        <!--{if $hax_paysetup[1]['state']}-->
+                        <div class="paytype">
+                            <div class="pay-plugin-qr-code-wrapper">
+                                <div class="unable-wrap" style="display: none;">
+                                    <i class="refresh-icon"></i> 
+                                    <p>{lang hax_rechargedmf:tlang25}</p>
+                                </div>
+                                <div class="qrcode-fail"></div>
+                            </div>
+                            <div class="pay-plugin-qr-code-right">
+                                <div class="pay-plugin-qr-code-num">{lang hax_rechargedmf:tlang7}<span class="grp_price">0</span><div class="days">&nbsp;&nbsp;/&nbsp;&nbsp;{lang hax_rechargedmf:tlang20}<i>0{lang hax_rechargedmf:tlang29}</i></div></div>
+                                <div class="hax_pay">
+                                <p class="pay-tips2">{lang hax_rechargedmf:tlang26}</p>
+                                <p class="pay-tips2" style="display:none;">{lang hax_rechargedmf:tlang27}<span id="timer" style="color:red">....</span>{lang hax_rechargedmf:tlang28}</p>
+                                <!--{if $hax_paysetup[1]['paymentkey01'] && $hax_paysetup[1]['paymentkey02'] && $hax_paysetup[1]['paymentkey03']}-->
+                                <a id="submit" href="javascript:;">{lang hax_rechargedmf:tlang30}</a>
+                                <!--{else}-->
+                                <span style="color:red;">{lang hax_rechargedmf:tlang31}</span>
+                                <!--{/if}-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $hax_paysetup[2]['state']}-->
+                        <div class="paytype {if $hax_paysetup[1]['state']}ahide{/if}">
+                            <div class="pay-plugin-qr-code-wrapper wxborder">
+                                <div class="unable-wrap" style="display: none;">
+                                    <i class="refresh-icon"></i> 
+                                    <p>{lang hax_rechargedmf:tlang25}</p>
+                                </div>
+                                <div class="qrcode-fail"></div>
+                            </div>
+                            <div class="pay-plugin-qr-code-right">
+                                <div class="pay-plugin-qr-code-num wx-price">{lang hax_rechargedmf:tlang7}<span class="grp_price">0</span><div class="days">&nbsp;&nbsp;/&nbsp;&nbsp;{lang hax_rechargedmf:tlang20}<i>0{lang hax_rechargedmf:tlang29}</i></div></div>
+                                <div class="hax_pay">
+                                <p class="pay-tips2">{lang hax_rechargedmf:tlang114}</p>
+                                <p class="pay-tips2 .wx-tips" style="display:none;">{lang hax_rechargedmf:tlang27}<span id="timer2" style="color:red">....</span>{lang hax_rechargedmf:tlang28}</p>
+                                <a id="wxsubmit" href="javascript:;">{lang hax_rechargedmf:tlang30}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $_G['setting']['card']['open']}-->
+                        <div class="paytype {if $hax_paysetup[1]['state'] || $hax_paysetup[2]['state']}ahide{/if}">
+                            <div class="pay-plugin-qr-code-num">{lang hax_rechargedmf:tlang7}<span class="grp_price">0</span><div class="days">&nbsp;&nbsp;/&nbsp;&nbsp;{lang hax_rechargedmf:tlang20}<i>0{lang hax_rechargedmf:tlang29}</i></div></div>
+                            <div class="cardbox">
+                                <input type="text" name="cardid" id="cardid" placeholder="{lang hax_rechargedmf:tlang38}">
+                                <div class="kmpaysb"><a style="border-radius: 0 3px 3px 0; margin-left: -94px;">{lang hax_rechargedmf:tlang30}</a></div>
+                            </div>
+                            <div class="kmtip">{if $hax_rechargedmf['kmgm']}{$hax_rechargedmf['kmgm']}{/if}</div>
+                        </div>
+                        <!--{/if}-->
+                        <!--{if $hax_paysetup[4]['state']}-->
+                        <div class="paytype {if $hax_paysetup[1]['state'] || $hax_paysetup[2]['state'] || $_G['setting']['card']['open']}ahide{/if}">
+                            <div class="pay-plugin-qr-code-num">
+                                <div class="rmbprice">{lang hax_rechargedmf:tlang7}<span class="grp_price">0</span></div>
+                                <div class="crdprice"><span class="jf_price">0</span>{$grp_zfcrdname}</div>
+                                <div class="days">&nbsp;&nbsp;/&nbsp;&nbsp;{lang hax_rechargedmf:tlang20}<i>0{lang hax_rechargedmf:tlang29}</i></div>
+                            </div>
+                            <div class="keyongyue">{lang hax_rechargedmf:tlang78}: <b>{$grp_zfcrdnum}</b> {$grp_zfcrdname} <i class="jfcki"></i></div>
+                            <div class="kmtip">{lang hax_rechargedmf:tlang100}</div>
+                            <div class="jfpaysb">
+                                <a>{lang hax_rechargedmf:tlang30}</a>
+                            </div>
+                        </div>
+                        <!--{/if}-->
+                        <!--{if !$hax_paysetup[1]['state']&&!$hax_paysetup[2]['state']&&!$_G['setting']['card']['open']&&!$hax_paysetup[4]['state']}-->
+                        <div class="allzfno">{lang hax_rechargedmf:tlang110}</div>
+                        <!--{/if}-->
+                    </div>
+                </div>
+                <div class="pay-plugin-rule-wrapper">
+                    
+                    <div class="pay-plugin-rule-txt">
+                        {$grp_dtip}
+                    </div>
+                </div>
+                <!--[diy=hax_rechargedmfdiy09]--><div id="hax_rechargedmfdiy09" class="area"></div><!--[/diy]-->
+            </div>
+        </div>
+    </div>
+<script>
+jQuery(function() {
+    var group = jQuery(".pay-plugin-tab-item");
+    ncost = jQuery(".grp_price");
+    var yxgrp = jQuery(".grp_active");
+    var maxtime = {$hax_rechargedmf['lxtime']} * 60;
+    cxxding();
+    // zengsongjifen();
+    showdayss();
+    isIntoo();
+    calcrdprice();
+    group.on("click", function() {
+        if(!jQuery(this).hasClass("grp_active")){
+            jQuery(this).siblings().removeClass("grp_active");
+            jQuery(this).addClass("grp_active");
+            var k = group.index(this);
+            jQuery(".hax_c .hax_ctrl").eq(k).removeClass("ahide");
+            jQuery(".hax_c .hax_ctrl").eq(k).siblings().addClass("ahide");
+            cxxding();
+            // zengsongjifen();
+            showdayss();
+            isIntoo();
+            calcrdprice();
+        }
+    });
+    jQuery(".pay-plugin-qr-item").on("click", function() {
+        if(!jQuery(this).hasClass("zf_active")){
+            jQuery(this).siblings().removeClass("zf_active");
+            jQuery(this).addClass("zf_active");
+            var ka = jQuery(".pay-plugin-qr-item").index(this);
+            jQuery(".paytype").eq(ka).removeClass("ahide");
+            jQuery(".paytype").eq(ka).siblings().addClass("ahide");
+        }
+    });
+    jQuery(".price_item").on("click", function() {
+        if(!jQuery(this).hasClass("is_active")){
+            jQuery(this).siblings().removeClass("is_active");
+            jQuery(this).addClass("is_active");
+            var money = jQuery(this).attr("money");
+            ncost.html(money);
+            showdayss();
+            isIntoo();
+            calcrdprice();
+        }
+    });
+    
+    jQuery("#submit,#wxsubmit").on("click", function() {
+        var uids='$_G[uid]';
+        if(uids<1){
+            alertss('{lang hax_rechargedmf:tlang39}');
+            setTimeout(function() {window.location.href='{$_G[siteurl]}member.php?mod=logging&action=login&referer=plugin.php?id=hax_rechargedmf:czhook';}, 3000);
+            return false;
+        }
+        if(!acmaxx()){
+            alertss('{lang hax_rechargedmf:tlang40}');
+            return false;
+        }
+        if(jQuery(".zf_active").hasClass("zfb")){
+            var paytype = "zfb";
+        }else if(jQuery(".zf_active").hasClass("wxzf")){
+            var paytype = "wxzf";
+        }
+        creategrporder(paytype);
+    });
+    jQuery(".unable-wrap").on("click", function() {
+        maxtime = {$hax_rechargedmf['lxtime']} * 60;
+        jQuery(".unable-wrap").hide();
+        jQuery(".qrcode-fail .phpqrcode").hide();
+        creategrporder();
+    });
+    
+    function calcrdprice() {
+        {if $hax_paysetup[4]['state']}
+        var zfcrdnum = {$grp_zfcrdnum};
+        var bili = {$grp_zfcrdbili};
+        var crdnum = parseInt(jQuery(".is_active").attr('money') * bili);
+        var crdnum = crdnum==0 ? 1 : crdnum;
+        jQuery(".crdprice .jf_price").html(crdnum);
+        if(zfcrdnum>=crdnum){
+            jQuery(".jfcki").removeClass("ichno").attr("title",'{lang hax_rechargedmf:tlang101}');
+        }else{
+            jQuery(".jfcki").addClass("ichno").attr("title",'{lang hax_rechargedmf:tlang99}');
+        }
+        {/if}
+    }
+    {if $hax_paysetup[4]['state']}
+    jQuery(".jfpaysb a").on("click", function() {//积分支付开通会员
+        var uids='$_G[uid]';
+        if(uids<1){
+            alertss('{lang hax_rechargedmf:tlang39}');
+            setTimeout(function() {window.location.href='{$_G[siteurl]}member.php?mod=logging&action=login&referer=plugin.php?id=hax_rechargedmf:czhook';}, 3000);
+            return false;
+        }
+        if(jQuery(".jfcki").hasClass("ichno")){
+            alertss('{lang hax_rechargedmf:tlang102}');
+            return false;
+        }
+        var bili = {$grp_zfcrdbili};
+        var crdnum = parseInt(jQuery(".is_active").attr('money') * bili);
+        var crdnum = crdnum==0 ? 1 : crdnum;
+        var grpname = jQuery(".grp_active .pay-plugin-tab-item-txt").html();
+        var days = jQuery(".is_active").attr("days");
+        if(confirm('{lang hax_rechargedmf:tlang103}'+crdnum+'{$grp_zfcrdname}'+'{lang hax_rechargedmf:tlang104}'+days+'{lang hax_rechargedmf:tlang29}'+grpname+'?')){
+            var zfcrdid = {$hax_paysetup[4]['paymentkey01']};
+            if(zfcrdid){
+                jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+                    mod:"hy",
+                    paytype:"jfzf",
+                    money:ncost.html(),
+                    grpid:jQuery(".grp_active").attr("grp"),
+                    grptime:jQuery(".is_active").attr("days"),
+                    key:jQuery(".is_active").attr("key"),
+                    // crdid:jQuery(".is_active").attr("crdid"),
+                    // crdnum:jQuery(".is_active").attr("crdnum"),
+                    hash:'{FORMHASH}',
+                    
+                },function(r){
+                    console.log(r);
+                    var obj = JSON.parse(r.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                    // console.log(obj);
+                    if(obj['err']=="grp_jfzf_is_null"||obj['err']=="err002"||obj['err']=="grp_jfzf_not_enough"){
+                        alertss('{lang hax_rechargedmf:tlang49}');
+                    }else if(obj['msg']=='jfzf_success'){
+                        alertss('{lang hax_rechargedmf:tlang46}');
+                        setTimeout(function() {window.location.href='{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl';}, 3000);
+                    }
+                });
+            }
+        }
+    });
+    {/if}
+    jQuery(".kmpaysb a").on("click", function() {
+        var uids='$_G[uid]';
+        if(uids<1){
+            alertss('{lang hax_rechargedmf:tlang39}');
+            setTimeout(function() {window.location.href='{$_G[siteurl]}member.php?mod=logging&action=login&referer=plugin.php?id=hax_rechargedmf:czhook';}, 3000);
+            return false;
+        }
+        var cid = jQuery("#cardid");
+        if(cid.val()){
+            jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+                mod:"hy",
+                paytype:"km",
+                cardid:cid.val(),
+                money:ncost.html(),
+                grpid:jQuery(".grp_active").attr("grp"),
+                grptime:jQuery(".is_active").attr("days"),
+                key:jQuery(".is_active").attr("key"),
+                // crdid:jQuery(".is_active").attr("crdid"),
+                // crdnum:jQuery(".is_active").attr("crdnum"),
+                hash:'{FORMHASH}',
+                
+            },function(r){
+                if(r=="km_weishuru"){
+                    alertss('{lang hax_rechargedmf:tlang41}');
+                }else if(r=="km_bucunzai"){
+                    alertss('{lang hax_rechargedmf:tlang42}');
+                }else if(r=="km_yishiyong"){
+                    alertss('{lang hax_rechargedmf:tlang43}');
+                }else if(r=="km_yiguoqi"){
+                    alertss('{lang hax_rechargedmf:tlang44}');
+                }else if(r=='km_mianzhibuzu'){
+                    alertss('{lang hax_rechargedmf:tlang45}');
+                    // return false;
+                }else if(r=='km_success'){
+                    alertss('{lang hax_rechargedmf:tlang46}');
+                    setTimeout(function() {window.location.href='{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vipjl';}, 3000);
+                }
+                console.log(r);
+            });
+        }else{
+            alertss('{lang hax_rechargedmf:tlang41}');
+        }
+    });
+    function showdayss() {
+        var days = jQuery(".is_active").attr("days");
+        if(days==0){
+            days = '{lang hax_rechargedmf:tlang47}';
+        }else{
+            days = days+'{lang hax_rechargedmf:tlang29}';
+        }
+        jQuery(".days i").html(days);
+    }
+    function cxxding() {
+        jQuery(".price_item").removeClass("is_active");
+        jQuery(".hax_ctrl").each(function() {
+            if(!jQuery(this).hasClass("ahide")){
+                var obj = jQuery(this).find('.price_item').eq(0).addClass("is_active");
+                // console.log(obj);
+            }
+        });
+        var money = jQuery(".is_active").attr("money");
+        ncost.html(money);
+    }
+    function creategrporder(paytype) {
+        jQuery(".qrcode-fail").html('<div class="oload"><div class="loadbox"><span class="flower-loader">Loading&#8230;</span></div></div>');
+        jQuery(".zhedang").show();
+        jQuery('html,body').animate({scrollTop:jQuery('.bb-intro-top').offset().top}, 400);
+        if(parseFloat($hax_rechargedmf['singlemin'])>ncost.html()){
+            alertss('{lang hax_rechargedmf:tlang48}'+ parseFloat($hax_rechargedmf['singlemin']) +'{lang hax_rechargedmf:tlang8}');
+            setTimeout(function() {window.location.reload();}, 3000);
+            return false;
+        }
+        jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+            mod:"hy",
+            money:ncost.html(),
+            grpid:jQuery(".grp_active").attr("grp"),
+            paytype:paytype,
+            grptime:jQuery(".is_active").attr("days"),
+            hash:'{FORMHASH}',
+            
+        },function(result){
+            console.log(result);
+            var obj = JSON.parse(result);
+            if(obj["err"]=="err001"){
+                alertss('{lang hax_rechargedmf:tlang48}'+ parseFloat($hax_rechargedmf['singlemin']) +'{lang hax_rechargedmf:tlang8}');
+                console.log(obj["err"]);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            if(obj["err"]=="err002"){
+                alertss('{lang hax_rechargedmf:tlang49}');
+                console.log(obj);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            if(obj["err"]=="err003"){
+                alertss('{lang hax_rechargedmf:tlang49}');
+                console.log(obj["err"]);
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            if(obj["err"]=="err004"){
+                console.log(obj["err"]);
+                alertss('{lang hax_rechargedmf:tlang40}');
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            
+            jQuery(".qrcode-fail").html(obj['img']);
+            jQuery("#submit,#wxsubmit").hide();
+            jQuery(".pay-tips2,.wx-tips").show();
+            // jQuery(".pay-tips2").eq(1).html('{lang hax_rechargedmf:tlang27}<span id="timer" style="color:red">....</span>{lang hax_rechargedmf:tlang28}').show();
+            // jQuery(".wx-tips").html('{lang hax_rechargedmf:tlang27}<span id="timer2" style="color:red">....</span>{lang hax_rechargedmf:tlang28}').show();
+            // jQuery(".pay-tips2").eq(1).show();
+            lunxun = setInterval(function(){ lunxunjieguo(obj['outTradeNo'],'grp',paytype) }, $hax_rechargedmf['lxjg']);
+            timer = setInterval(function(){ CountDown() }, 1000);
+		});
+    }
+    function lunxunjieguo(outTradeNo,mod,paytype) {
+        var money = ncost.html();
+        if(paytype == 'zfb'){
+            var url = '{$_G[siteurl]}plugin.php?id=hax_rechargedmf:aliquery';
+            jQuery.get(url,{
+                outTradeNo:outTradeNo,
+                mod:mod,
+            }, function (data) {
+                console.log(data);
+                var obj = JSON.parse(data.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                if (obj['trade_status'] == 'TRADE_SUCCESS'&&obj['out_trade_no'] == outTradeNo) {
+                    clearInterval(timer);
+                    clearInterval(lunxun);
+                    var zfcg ='<div class="zfcglogo"></div><div class="zfcgtext">{lang hax_rechargedmf:tlang76}</div><div class="zfcgmoney">'+money+'{lang hax_rechargedmf:tlang8}</div><div class="zfcgtip">{$viped_tip}</div>';
+                    jQuery(".trade-list").html(zfcg);
+                }else if(obj['trade_status'] == 'WAIT_BUYER_PAY'){
+                    jQuery(".pay-tips").eq(0).html('{lang hax_rechargedmf:tlang50}');
+                }
+            });
+        }else if(paytype == 'wxzf'){
+            var url = '{$_G[siteurl]}plugin.php?id=hax_rechargedmf:wxquery';
+            jQuery.get(url,{
+                outTradeNo:outTradeNo,
+                mod:mod,
+            }, function (data) {
+                console.log(data);
+                var obj = JSON.parse(data.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                if (obj['0'] == 'SUCCESS') {
+                    clearInterval(timer);
+                    clearInterval(lunxun);
+                    var zfcg ='<div class="wxzfcg"><div class="zfcglogo"></div><div class="zfcgtext">{lang hax_rechargedmf:tlang76}</div><div class="zfcgmoney">'+money+'{lang hax_rechargedmf:tlang8}</div><div class="zfcgtip">{$viped_tip}</div></div>';
+                    jQuery(".trade-list").html(zfcg);
+                }
+            });
+        }
+    }
+    function CountDown() {
+        
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = minutes + "{lang hax_rechargedmf:tlang51}" + seconds + "{lang hax_rechargedmf:tlang52}";
+            jQuery("#timer,#timer2").html(msg);
+            // document.all["timer"].innerHTML = msg;
+                --maxtime;
+        } else{
+            clearInterval(timer);
+            clearInterval(lunxun);
+            jQuery(".unable-wrap").removeAttr("style");
+            jQuery(".pay-tips2").eq(0).html("");
+            jQuery(".pay-tips2").eq(1).html('{lang hax_rechargedmf:tlang53}');
+        }
+    }
+    function isIntoo() {
+        var money = ncost.html();
+        if(isInteger(Number(money))){
+                money += '.00';
+            }
+        ncost.html(money);
+    }
+});
+</script>
+    <!--{elseif $_GET['mod'] == 'vipjl'}-->
+    
+    <div class="bp-right">
+        <div>
+            <div class="bb-intro-top">
+                <a class="b-icon-title">{lang hax_rechargedmf:tlang5}</a>
+                <div class="b-question">
+                    <div class="b-question-icon"></div> 
+                    <a href="$wtlj" target="_blank" class="b-question-title">{lang hax_rechargedmf:tlang9}</a>
+                </div>
+            </div>
+            <!--[diy=hax_rechargedmfdiy03]--><div id="hax_rechargedmfdiy03" class="area"></div><!--[/diy]-->
+            <div class="trade-list">
+                <div class="people-home-bg">
+                    <div class="bg-image">        
+                        {if $hax_rechargedmf['bgimg']}<img src="$hax_rechargedmf['bgimg']"/>{/if}        
+                    </div>
+                    <div class="data-wraper">
+                        <!--<div class="data-wrap-box">-->
+                        <!--    <p class="data-list-box left">-->
+                        <!--        {lang hax_rechargedmf:tlang54}-->
+                        <!--        <span title="人气" class="data-number">{$_G[group][grouptitle]}</span>-->
+                        <!--    </p>-->
+                        <!--    <p class="data-list-box left">-->
+                        <!--        {lang hax_rechargedmf:tlang111}-->
+                        <!--        <a href="" title="积分" class="data-number">366</a>-->
+                        <!--    </p>-->
+                        <!--    <p class="data-list-box right">-->
+                        <!--        关注-->
+                        <!--        <a href="" title="关注" class="data-number">0</a>-->
+                        <!--    </p>-->
+                        <!--    <p class="data-list-box right">-->
+                        <!--        粉丝-->
+                        <!--        <a href="" title="粉丝" class="data-number">8380</a>-->
+                        <!--    </p>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div class="home-information-wrap">
+                    <div class="home-information-box">
+                        <div class="avatar-container-80 center">
+                            <div class="information-headimg-box">{avatar($_G['uid'],middle)}</div>
+                        </div>
+                        <div class="information-content-wrap text-center">
+                            <p class="people-nick-name">
+                                {$_G['username']} [ <span>{$_G[group][grouptitle]}</span> ]
+                                <span class="zcool-treetop">
+                                    {if $_G[group][icon]}<a class="title-icon"><img src="{$grpicon}"></a>{/if}
+                                </span>
+                            </p>
+                            <p class="user-background">{lang hax_rechargedmf:tlang55}    {$nowgrouptime}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="title-group">
+                    <div class="">
+                        <div class="recode-title {if $_GET['tab']!=2}selected-title{/if}">{lang hax_rechargedmf:tlang5}</div> 
+                        <div class="recode-title {if $_GET['tab']==2}selected-title{/if}">{lang hax_rechargedmf:tlang56}</div>
+                    </div>
+                    <div class="tab_border">
+                        <div class="tab_ctrl {if $_GET['tab']==2}ahide{/if}">
+                            <!--{if !$hycount}-->
+                            <div class="nolist">
+                                <p class="order_emp">{lang hax_rechargedmf:tlang57}</p>
+                            </div>
+                            <!--{else}-->
+                            <div class="el-table el-table--fit el-table--enable-row-hover el-table--enable-row-transition" style="width: 100%;">
+                                <div class="el-table__header-wrapper">
+                                    <table cellspacing="0" cellpadding="0" border="0" class="el-table__header" style="width: 856px;">
+                                        <colgroup>
+                                            <col name="el-table_4_column_21" width="250">
+                                            <col name="el-table_4_column_22" width="80">
+                                            <col name="el-table_4_column_23" width="150">
+                                            <col name="el-table_4_column_24" width="130">
+                                            <col name="el-table_4_column_26" width="80">
+                                        </colgroup>
+                                        <thead class="has-gutter">
+                                            <tr class="">
+                                                <th colspan="1" rowspan="1" class="el-table_4_column_21     is-leaf">
+                                                    <div class="cell">{lang hax_rechargedmf:tlang15}</div>
+                                                </th>
+                                                <th colspan="1" rowspan="1" class="el-table_4_column_22   text-right  is-leaf">
+                                                    <div class="cell" style="text-align: center;">{lang hax_rechargedmf:tlang16}</div>
+                                                </th>
+                                                <th colspan="1" rowspan="1" class="el-table_4_column_23   text-right  is-leaf">
+                                                    <div class="cell" style="text-align: center;">{lang hax_rechargedmf:tlang58}</div>
+                                                </th>
+                                                <th colspan="1" rowspan="1" class="el-table_4_column_24   text-right  is-leaf">
+                                                    <div class="cell">{lang hax_rechargedmf:tlang59}</div>
+                                                </th>
+                                                <th colspan="1" rowspan="1" class="el-table_4_column_26   text-right  is-leaf">
+                                                    <div class="cell">{lang hax_rechargedmf:tlang19}</div>
+                                                </th>
+                                                <th class="gutter" style="width: 0px; display: none;"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="el-table__body-wrapper is-scrolling-none">
+                                    <table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 856px;">
+                                        <colgroup>
+                                            <col name="el-table_4_column_21" width="250">
+                                            <col name="el-table_4_column_22" width="80">
+                                            <col name="el-table_4_column_23" width="150">
+                                            <col name="el-table_4_column_24" width="130">
+                                            <col name="el-table_4_column_26" width="80">
+                                        </colgroup>
+                                        <tbody>
+                                            <!--{loop $hylist $key $val}-->
+                                            
+                                            <tr class="el-table__row">
+                                                <td class="el-table_4_column_21  ">
+                                                    <div class="cell" style="text-align: left;">$val['orderid']</br><span style="font-size: 12px;color:#607D8B;">$val['time']</span></div>
+                                                </td>
+                                                <td class="el-table_4_column_22  text-right">
+                                                    <div class="cell" style="text-align: center;">{$val['money']}{$val['zfcrd']}</div>
+                                                </td>
+                                                <td class="el-table_4_column_23  text-right">
+                                                    <div class="cell" style="text-align: center;"><span class="lb_credit">$val['grpname']</span>$val['grouptime']</br>$val['groupname'] $val['credit']</div>
+                                                </td>
+                                                <td class="el-table_4_column_24  text-right">
+                                                    <div class="cell"><span class="lb_credit">$val['totime']</span></div>
+                                                </td>
+                                                <td class="el-table_4_column_26  text-right">
+                                                    <div class="cell">$val['type']</br><span class="lb_state">$val['state']</span></div>
+                                                </td>
+                                            </tr>
+                                            <!--{/loop}-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {$multi}
+                            {/if}
+                        </div>
+                        <div class="tab_ctrl {if !$_GET['tab']}ahide{/if}">
+                            <ul class="grpul">
+                                {if $expirylist}
+                                {loop $expirylist $k $v}
+                                <li {if $k==$_G[group][groupid]}class="isgrpli"{/if}>
+                                    <div class="grptitle"> {$v['grouptitle']} </div>
+                                    <div class="grp_totime">
+                                         {lang hax_rechargedmf:tlang55}  {if $v['time']}{$v['time']}{else}{lang hax_rechargedmf:tlang47}{/if}
+                                    </div>
+                                    <div class="grp_switch">
+                                        {if $v['type']=='ext'}<a class="xf" href="{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=vip">{lang hax_rechargedmf:tlang60}</a>{/if}
+                                        {if !($_G['groupid']==$k)}{if !$v[noswitch]}<a class="qh" onclick="grpswitch('{$k}')">{lang hax_rechargedmf:tlang61}</a>{/if}{/if}
+                                    </div>
+                                </li>
+                                {/loop}
+                                {else}
+                                <div class="nolist">
+                                    <p class="order_emp">{lang hax_rechargedmf:tlang62}</p>
+                                </div>
+                                {/if}
+                                <div class="clear"></div>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--[diy=hax_rechargedmfdiy10]--><div id="hax_rechargedmfdiy10" class="area"></div><!--[/diy]-->
+            </div>
+        </div>
+    </div>
+<script>
+jQuery(function() {
+    var qhan = jQuery(".recode-title");
+    qhan.on("click", function() {
+        if(!jQuery(this).hasClass("selected-title")){
+            jQuery(this).siblings().removeClass("selected-title");
+            jQuery(this).addClass("selected-title");
+            var k = qhan.index(this);
+            jQuery(".tab_border .tab_ctrl").eq(k).removeClass("ahide");
+            jQuery(".tab_border .tab_ctrl").eq(k).siblings().addClass("ahide");
+        }
+    });
+});
 
+function grpswitch(groupid){
+    jQuery.get('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:swgrp&grpid='+groupid,function (r){
+        var r = JSON.parse(r);
+        if(r.state==1){
+        alertss('{lang hax_rechargedmf:tlang63}','refresh',2000);
+        return false;
+        }else{
+        alertss('{lang hax_rechargedmf:tlang64}');
+        console.log(r);
+        return false;
+        }
+    });
+}
+
+</script>
+    <!--{else}-->
+    <div class="bp-right">
+        <div>
+            <div class="bb-intro-top">
+                <a class="b-icon-title">{lang hax_rechargedmf:tlang1}</a>
+                <div class="b-question">
+                    <div class="b-question-icon"></div> 
+                    <a href="$wtlj" target="_blank" class="b-question-title">{lang hax_rechargedmf:tlang9}</a>
+                </div>
+            </div>
+            <!--[diy=hax_rechargedmfdiy04]--><div id="hax_rechargedmfdiy04" class="area"></div><!--[/diy]-->
+            <div class="trade-list">
+                <div class="zhedang"></div>
+                <!--{if $hax_paysetup[1]['state']||$hax_paysetup[2]['state']}-->
+                <div class="fixxx">
+                    <div class="pay-plugin-tab-wrapper">
+                        <!--{loop $creditdata $v}-->
+                        <div class="pay-plugin-tab-item {$v['crd_active']}" nowcredit="{$v['nowcredit']}" bili='{$v['bili']}' creditname="{$v['creditname']}" value="{$v['creditid']}">
+                            <div class="pay-plugin-tab-item-txt">{$v['creditname']}</div>
+                            <div class="pay-plugin-tab-item-txt-info">{$v['descr']}</div>
+                            <div class="crdfloat"style="display:none;">{lang hax_rechargedmf:tlang112}{if $v['nowcredit']}{$v['nowcredit']}{else}0{/if}{$v['creditname']}</div>
+                        </div>
+                        <!--{/loop}-->
+                    </div>
+                    <div class="clear"></div>
+                    <div class="hax_ctrl">
+                    <!--{loop $creditdata $k $v}-->
+                    <div class="trade-list-wrapper ahide {if $k==0}isshow{/if}">
+                        <!--{loop $v['money'] $key $val}-->
+                        <div class="trade-wrapper {if $val['crd']<1}suoding{/if}" money="{$val['mon']}" crd="{$val['crd']}">
+                            <div class="moneybox">
+                                <span>{$val['crd']}<span class="bb-name">{$v['creditname']}</span></span>
+                                <div class="money">{lang hax_rechargedmf:tlang7}{$val['mon']}</div>
+                            </div>
+                            <!--{if $val['sendid']}-->
+                            <span class="send"><a>{lang hax_rechargedmf:tlang75}{$val['sendnum']}{$_G['setting']['extcredits'][$val['sendid']]['title']}</a></span>
+                            <!--{/if}-->
+                        </div>
+                        <!--{/loop}-->
+                        <!--{if $v['custom']}-->
+                        <div class="trade-wrapper trade-customn" money="0" crd="0">
+                            <div class="enter-wrapper" style="display:none;">
+                                <input type="text" pattern="[0-9]*" class="zdysl" onkeyup='this.value=this.value.replace(/\D/gi,"")'> 
+                                <span class="bb-name">{$v['creditname']}</span>
+                                <div class="enter-tip">{lang hax_rechargedmf:tlang68}</div>
+                            </div>
+                            <div class="tips">{lang hax_rechargedmf:tlang69}</div>
+                        </div>
+                        <!--{/if}-->
+                    </div>
+                    <!--{/loop}-->
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <!--{/if}-->
+                <div class="clear"></div>
+                <p class="num-tip" style="float: left;">{lang hax_rechargedmf:tlang72}</p>
+                <div class="shell-channel">
+                    <!--{if $hax_paysetup[1]['state']}-->
+                    <div class="shell-item alipay zfis"><img src="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/zfb165x58.png" alt="{lang hax_rechargedmf:tlang23}" /></div>
+                    <!--{/if}-->
+                    <!--{if $hax_paysetup[2]['state']}-->
+                    <div class="shell-item wxpay {if !$hax_paysetup[1]['state']}zfis{/if}"><img src="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/wx165x58.png" alt="{lang hax_rechargedmf:slang28}" /></div>
+                    <!--{/if}-->
+                    <!--{if $_G['setting']['card']['open']}-->
+                    <div class="shell-item kmpay {if !$hax_paysetup[1]['state']&&!$hax_paysetup[2]['state']}zfis{/if}"><img src="{$_G[siteurl]}source/plugin/hax_rechargedmf/template/img/kmpay01.png" alt="{lang hax_rechargedmf:tlang73}" /></div>
+                    <!--{/if}-->
+                </div>
+                <div class="kmpayop" {if !$hax_paysetup[1]['state'] && !$hax_paysetup[2]['state'] && $_G['setting']['card']['open']}style="display:block"{/if}>
+                    <p class="num-tip" style="float: left;">{lang hax_rechargedmf:tlang70}</p>
+                    <div class="kmpaybox">
+                        <input type="text" class="form-control" id="cardid" placeholder="{lang hax_rechargedmf:tlang32}" name="cardid">
+                        <div class="kmpaysb"><a style="border-radius: 0 3px 3px 0; margin-left: -94px;">{lang hax_rechargedmf:tlang34}</a></div>
+                        <div class="kmtip">{if $hax_rechargedmf['kmgm']}{$hax_rechargedmf['kmgm']}{/if}</div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <!--{if $hax_paysetup[1]['state'] || $hax_paysetup[2]['state']}-->
+                <div class="qrpay-group {if !$hax_paysetup[1]['state']}wxborder{/if}">
+                    <div class="qr-icon-group {if !$hax_paysetup[1]['state']}wxborder{/if}">
+                        <div class="unable-wrap" style="display: none;">
+                            <i class="refresh-icon"></i> 
+                            <p>{lang hax_rechargedmf:tlang25}</p>
+                        </div>
+                        <div class="zfb-box wx-box"></div>
+                    </div>
+                    <div class="qrpay-content {if !$hax_paysetup[1]['state']}wxborder{/if}">
+                        <div class="price"><span class="price-type">{lang hax_rechargedmf:tlang7}</span>
+                            <p>0.00</p>
+                        </div>
+                        <div class="hax_pay">
+                            <p class="pay-tips">{if $hax_paysetup[1]['state']}{lang hax_rechargedmf:tlang26}{else}{lang hax_rechargedmf:tlang114}{/if}</p>
+                            <p class="pay-tips" style="display:none;">{lang hax_rechargedmf:tlang27}<span id="timer" style="color:red">....</span>{lang hax_rechargedmf:tlang28}</p>
+                            <a id="submit" href="javascript:;">{lang hax_rechargedmf:tlang34}</a>
+                        </div>
+                    </div>
+                </div>
+                <!--{/if}-->
+                <!--{if !$hax_paysetup[1]['state'] && !$_G['setting']['card']['open']}-->
+                <div class="allzfno">{lang hax_rechargedmf:tlang110}</div>
+                <!--{/if}-->
+                <div class="agreement">
+                    {$xylj}
+                </div>
+                <!--[diy=hax_rechargedmfdiy11]--><div id="hax_rechargedmfdiy11" class="area"></div><!--[/diy]-->
+            </div>
+        </div>
+    </div>
+<script>
+jQuery(function() {
+    var czopt = jQuery(".trade-wrapper");
+    ncost = jQuery(".price p");
+    var re = /([0-9]+\.[0-9]{2})[0-9]*/;
+    var maxtime = {$hax_rechargedmf['lxtime']} * 60;
+    
+    ncost.html(jQuery(".is-selected").attr("money"));
+    chongxinxuanding();
+    isIntoo();
+    
+    jQuery(".pay-plugin-tab-item").hover(function(){
+        jQuery(this).find('.pay-plugin-tab-item-txt-info').hide();
+        jQuery(this).find('.crdfloat').show();
+    },function(){
+        jQuery(this).find('.pay-plugin-tab-item-txt-info').show();
+        jQuery(this).find('.crdfloat').hide();
+    });
+    czopt.on("click", function() {
+        var zdy=jQuery(this).hasClass("trade-customn");
+        var crd = jQuery(this).attr("crd");
+        if(crd!=0 && !zdy){
+            if(!jQuery(this).hasClass("is-selected")){
+                jQuery(this).siblings().removeClass("is-selected");
+                jQuery(this).addClass("is-selected");
+                jQuery(".enter-wrapper").hide();
+                jQuery(".tips").show();
+                var money=jQuery(this).attr("money");
+                ncost.html(money);
+                isIntoo();
+            }
+        }else if(zdy){
+            if(!jQuery(this).hasClass("is-selected")){
+                jQuery(this).siblings().removeClass("is-selected");
+                jQuery(this).addClass("is-selected");
+                if(jQuery('.isshow .zdysl').val()){
+                    var money=jQuery(this).attr("money");
+                    ncost.html(money);
+                    isIntoo();
+                }
+            }
+        }
+    });
+    jQuery(".pay-plugin-tab-item").on("click", function() {
+        if(!jQuery(this).hasClass("crd_active")){
+            jQuery(this).siblings().removeClass("crd_active");
+            jQuery(this).addClass("crd_active");
+            var k = jQuery(".pay-plugin-tab-item").index(this);
+            jQuery(".hax_ctrl .trade-list-wrapper").eq(k).addClass("isshow");
+            jQuery(".hax_ctrl .trade-list-wrapper").eq(k).siblings().removeClass("isshow");
+            jQuery(".enter-wrapper").hide();
+            jQuery(".tips").show();
+            chongxinxuanding();
+            isIntoo();
+        }
+    });
+    jQuery(".trade-customn").on("click", function() {
+        jQuery(".enter-wrapper").show();
+        jQuery(".tips").hide();
+        jQuery(".enter-wrapper input").focus();
+    });
+    jQuery(".shell-item").on("click", function() {
+        if(!jQuery(this).hasClass("zfis")){
+            jQuery(this).siblings().removeClass("zfis");
+            jQuery(this).addClass("zfis");
+            if(jQuery(this).hasClass("kmpay")){
+                jQuery(".fixxx").hide();
+                jQuery(".qrpay-group").hide();
+                jQuery(".kmpayop").show();
+            }else if(jQuery(this).hasClass("alipay")){
+                jQuery(".kmpayop").hide();
+                jQuery(".fixxx").show();
+                jQuery(".qrpay-group").show();
+                jQuery(".qr-icon-group,.qrpay-content").removeClass("wxborder");
+                jQuery(".pay-tips").eq(0).html('{lang hax_rechargedmf:tlang26}');
+            }else if(jQuery(this).hasClass("wxpay")){
+                jQuery(".kmpayop").hide();
+                jQuery(".fixxx").show();
+                jQuery(".qrpay-group").show();
+                jQuery(".qr-icon-group,.qrpay-content").addClass("wxborder");
+                jQuery(".pay-tips").eq(0).html('{lang hax_rechargedmf:tlang114}');
+            }
+        }
+    });
+    jQuery(".kmpaysb a").on("click", function() {
+        var uids='$_G[uid]';
+        if(uids<1){
+            alertss('{lang hax_rechargedmf:tlang39}');
+            setTimeout(function() {window.location.href='{$_G[siteurl]}member.php?mod=logging&action=login&referer=plugin.php?id=hax_rechargedmf:czhook';}, 3000);
+            return false;
+        }
+        var cid = jQuery("#cardid");
+        if(cid.val()){
+            jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+                mod:"jf",
+                paytype:"km",
+                cardid:cid.val(),
+                hash:'{FORMHASH}',
+            },function(r){
+                // var result = JSON.parse(r);
+                if(r=="km_weishuru"){
+                    alertss('{lang hax_rechargedmf:tlang41}');
+                }else if(r=="km_bucunzai"){
+                    alertss('{lang hax_rechargedmf:tlang42}');
+                }else if(r=="km_yishiyong"){
+                    alertss('{lang hax_rechargedmf:tlang43}');
+                }else if(r=="km_yiguoqi"){
+                    alertss('{lang hax_rechargedmf:tlang44}');
+                }else{
+                    alertss('{lang hax_rechargedmf:tlang74}'+r);
+                    setTimeout(function() {window.location.href='{$_G[siteurl]}plugin.php?id=hax_rechargedmf:czhook&mod=czjl';}, 3000);
+                }
+                // console.log(r);
+            });
+        }else{
+            alertss('{lang hax_rechargedmf:tlang41}');
+        }
+    });
+    jQuery(document).on("input propertychange",".is-selected .zdysl", function(e){
+        var bili = jQuery('.crd_active').attr("bili");
+        var zdydiv = jQuery(this).parents('.trade-customn');
+        if(!isNaN(jQuery(this).val())){
+            zdydiv.attr('money',(jQuery(this).val()/bili));
+            zdydiv.attr('crd',jQuery(this).val());
+        }
+        var money=zdydiv.attr('money').replace(re,"$1");
+        zdydiv.find(".enter-tip").html('{lang hax_rechargedmf:tlang7}'+money);
+        ncost.html(money);
+        isIntoo();
+    });
+    jQuery("#submit").on("click", function() {
+        var uids='$_G[uid]';
+        if(uids<1){
+            alertss('{lang hax_rechargedmf:tlang39}');
+            setTimeout(function() {window.location.href='{$_G[siteurl]}member.php?mod=logging&action=login&referer=plugin.php?id=hax_rechargedmf:czhook';}, 3000);
+            return false;
+        }
+        if(!acmaxx()){
+            alertss('{lang hax_rechargedmf:tlang40}');
+            return false;
+        }
+        // oppaixu();
+        if(jQuery(".zfis").hasClass("alipay")){
+            var paytype = 'zfb';
+        }else if(jQuery(".zfis").hasClass("wxpay")){
+            var paytype = 'wxzf';
+        }
+        createorder(paytype);
+    });
+    jQuery(".unable-wrap").on("click", function() {
+        maxtime = {$hax_rechargedmf['lxtime']} * 60;
+        jQuery(".unable-wrap").hide();
+        jQuery(".zfb-box .phpqrcode").hide();
+        // oppaixu();
+        if(jQuery(".zfis").hasClass("alipay")){
+            var paytype = 'zfb';
+        }else if(jQuery(".zfis").hasClass("wxpay")){
+            var paytype = 'wxzf';
+        }
+        createorder(paytype);
+    });
+    function createorder(paytype) {
+        jQuery(".zhedang").show();
+        jQuery(".zfb-box").html('<div class="oload"><div class="loadbox"><span class="flower-loader">Loading&#8230;</span></div></div>');
+        jQuery('html,body').animate({scrollTop:jQuery('.bb-intro-top').offset().top}, 400);
+        var yxcrd=jQuery('.crd_active');
+        if(parseFloat($hax_rechargedmf['singlemin'])>ncost.html()){
+            alertss('{lang hax_rechargedmf:tlang48}'+ parseFloat($hax_rechargedmf['singlemin']) +'{lang hax_rechargedmf:tlang8}');
+            setTimeout(function() {window.location.reload();}, 3000);
+            return false;
+        }
+        
+        var zdycrdnum = jQuery(".is-selected").hasClass("trade-customn") ? jQuery(".is-selected").attr("crd") : '';
+        jQuery.post('{$_G[siteurl]}plugin.php?id=hax_rechargedmf:dopay',{
+            mod:"jf",
+            money:ncost.html(),
+            credittype:yxcrd.attr("value"),
+            crd:jQuery(".is-selected").attr("crd"),
+            zdycrdnum:zdycrdnum,
+            paytype:paytype,
+            hash:'{FORMHASH}',
+        },function(result){
+            console.log(result);
+            var obj = JSON.parse(result);
+            if(obj["err"]=="err001"){
+                console.log(obj["err"]);
+                alertss('{lang hax_rechargedmf:tlang48}'+ parseFloat($hax_rechargedmf['singlemin']) +'{lang hax_rechargedmf:tlang8}');
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            if(obj["err"]=="err002"){
+                console.log(obj["err"]);
+                alertss('{lang hax_rechargedmf:tlang49}');
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            if(obj["err"]=="err004"){
+                console.log(obj["err"]);
+                alertss('{lang hax_rechargedmf:tlang40}');
+                setTimeout(function() {window.location.reload();}, 3000);
+                return false;
+            }
+            jQuery(".zfb-box").html(obj['img']);
+            jQuery("#submit").hide();
+            jQuery(".pay-tips").eq(1).html('{lang hax_rechargedmf:tlang27}<span id="timer" style="color:red">....</span>{lang hax_rechargedmf:tlang28}');
+            jQuery(".pay-tips").eq(1).show();
+            lunxun = setInterval(function(){ lunxunjieguo(obj['outTradeNo'],'crd',paytype) }, $hax_rechargedmf['lxjg']);
+            timer = setInterval(function(){ CountDown() }, 1000);
+		});
+    }
+    function CountDown() {
+        
+        if (maxtime >= 0) {
+            minutes = Math.floor(maxtime / 60);
+            seconds = Math.floor(maxtime % 60);
+            msg = minutes + "{lang hax_rechargedmf:tlang51}" + seconds + "{lang hax_rechargedmf:tlang52}";
+            jQuery("#timer").html(msg);
+                --maxtime;
+        } else{
+            clearInterval(timer);
+            clearInterval(lunxun);
+            jQuery(".unable-wrap").removeAttr("style");
+            jQuery(".pay-tips").eq(0).html("");
+            jQuery(".pay-tips").eq(1).html('{lang hax_rechargedmf:tlang53}');
+        }
+    }
+    function chongxinxuanding() {
+        jQuery(".trade-wrapper").removeClass("is-selected");
+        jQuery('.isshow .trade-wrapper').each(function() {
+            var crd = jQuery(this).attr("crd");
+            if(!jQuery(this).hasClass("trade-customn")){
+                if(crd>=1){
+                jQuery(this).addClass("is-selected");
+                var money=jQuery(this).attr("money");
+                    ncost.html(money);
+                    return false;
+                }
+            }
+        });
+    }
+    function isIntoo() {
+        var money = jQuery(".price p").html();
+        if(isInteger(Number(money))){
+                money += '.00';
+            }
+        jQuery(".price p").html(money);
+    }
+    function lunxunjieguo(outTradeNo,mod,paytype) {
+        var money = ncost.html();
+        if(paytype == 'zfb'){
+            var url = '{$_G[siteurl]}plugin.php?id=hax_rechargedmf:aliquery';
+            jQuery.get(url,{
+                outTradeNo:outTradeNo,
+                mod:mod,
+            }, function (data) {
+                console.log(data);
+                var obj = JSON.parse(data.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                if (obj['trade_status'] == 'TRADE_SUCCESS'&&obj['out_trade_no'] == outTradeNo) {
+                    clearInterval(timer);
+                    clearInterval(lunxun);
+                    var zfcg ='<div class="zfcglogo"></div><div class="zfcgtext">{lang hax_rechargedmf:tlang76}</div><div class="zfcgmoney">'+money+'{lang hax_rechargedmf:tlang8}</div><div class="zfcgtip">{$ali_tip}</div>';
+                    jQuery(".trade-list").html(zfcg);
+                }else if(obj['trade_status'] == 'WAIT_BUYER_PAY'){
+                    jQuery(".pay-tips").eq(0).html('{lang hax_rechargedmf:tlang50}');
+                }
+            });
+        }else if(paytype == 'wxzf'){
+            var url = '{$_G[siteurl]}plugin.php?id=hax_rechargedmf:wxquery';
+            jQuery.get(url,{
+                outTradeNo:outTradeNo,
+                mod:mod,
+            }, function (data) {
+                console.log(data);
+                var obj = JSON.parse(data.replace(/\n/g,"\\n").replace(/\r/g,"\\r"));
+                if (obj['0'] == 'SUCCESS') {
+                    clearInterval(timer);
+                    clearInterval(lunxun);
+                    var zfcg ='<div class="wxzfcg"><div class="zfcglogo"></div><div class="zfcgtext">{lang hax_rechargedmf:tlang76}</div><div class="zfcgmoney">'+money+'{lang hax_rechargedmf:tlang8}</div><div class="zfcgtip">{$ali_tip}</div></div>';
+                    jQuery(".trade-list").html(zfcg);
+                }
+            });
+        }
+    }
+});
+
+
+</script>
+    <!--{/if}-->
+</div>
+<script>
+function alertss(text,url,stime){
+    var stime = stime ? stime : 3000;
+    jQuery('.alertbox').show().html(text);
+    setTimeout(function() {
+        jQuery('.alertbox').fadeOut();
+        if(url){
+            if(url=='refresh'){
+                window.location.reload();
+            }else{
+                window.location.href = url;
+            }
+        }
+    }, stime);
+}
+function isInteger(obj) {
+    return Math.floor(obj) === obj
+}
+function acmaxx() {
+    var money = ncost.html();
+    var cmax = parseFloat({$acmax})+parseFloat(money);
+    var amax = '$hax_rechargedmf[acmax]';
+    if(amax!='0'){
+        if(cmax > amax){
+            return false;
+        }else{
+            return true;
+        }
+    }else{
+        return true;
+    }
+}
+</script>
+<div class="clear"></div>
+<!--{template common/footer}-->

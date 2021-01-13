@@ -1,0 +1,46 @@
+<style>
+input,textarea{border: 1px solid #ddd; border-radius: 3px;}
+.btbt{margin-top: 10px; padding: 5px 15px; border: 0; background: #607D8B; color: #fff; border-radius: 3px;cursor: pointer;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;-o-transition:all 0.2s linear;-ms-transition:all 0.2s linear;transition:all 0.2s linear;}
+</style>
+<form name="cpform" method="post" autocomplete="off" action="{$pluginurl}" id="cpform">
+    <input type="hidden" name="formhash" value="{FORMHASH}">
+    <input type="hidden" id="formscrolltop" name="scrolltop" value="">
+    <input type="hidden" name="anchor" value="">
+    <table class="tb tb2 ">
+        <tbody>
+            <tr>
+                <th colspan="15" class="partition">{$lang['slang1']}</th>
+            </tr>
+            <tr class="header">
+                <th>{$lang['slang4']}</th>
+                <th>{$lang['slang2']}</th>
+                <th>{$lang['slang96']}</th>
+                <th>{$lang['slang137']}</th>
+                <th>{$lang['slang104']}</th>
+                <th>{$lang['slang138']}</th>
+                <th>{$lang['slang3']}</th>
+                <th>{$lang['slang5']}</th>
+            </tr>
+            <!--{loop $crdlist $k $v}-->
+            <tr class="hover">
+                <td width="60"><input class="checkbox" type="checkbox" name="crdform[$k][state]" {$v['checked']} value="1"></td>
+                <td width="100">{$lang['slang93']}{$k}<input name="crdform[$k][creditid]" type="hidden" value="{$k}"></td>
+                <td width="200"><input name="crdform[$k][descr]" type="text" value="{$v['descr']}" style="width: 180px;"></td>
+                <td width="250"><input name="crdform[$k][money]" type="text" value="{$v['money']}" style="width: 220px;"></td>
+                <td width="250"><textarea name="crdform[$k][send]" style="width: 200px; height: 80px;resize:both;" placeholder="{$lang['slang109']}" >{$v['send']}</textarea></td>
+                <td width="150"><input class="checkbox" type="checkbox" name="crdform[$k][custom]" {$v['cuschecked']} value="1"></td>
+                <td width="250">1{$lang['slang6']} = <input name="crdform[$k][bili]" value="{$v['bili']}" style="width:50px"> {$v['title']}</td>
+                <td><input name="crdform[$k][shunxu]" value="{$v['shunxu']}" style="width:50px"> </td>
+            </tr>
+            <!--{/loop}-->
+            <tr>
+                <td colspan="15">
+                    <div class="fixsel"><input type="submit" class="btbt" id="submit_forumset" name="forumset" value="{lang hax_rechargedmf:slang92}"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<script
+type="text/JavaScript">_attachEvent(document.documentElement, 'keydown', function (e) { entersubmit(e, 'forumset'); });
+</script>
